@@ -1,0 +1,44 @@
+<{$bootstrap}>
+<{$jquery}>
+<{$toolbar}>
+
+<script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/jqueryCookie/jquery.cookie.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  var $tabs = $("#rss-tabs").tabs({ cookie: { expires: 30 } , collapsible: true});
+});
+</script>
+
+<div id="rss-tabs">
+  <ul>
+    <{foreach item=web from=$data}>
+      <li><a href="#rss-tabs-<{$web.rss_sn}>"><{$web.title}></a></li>
+    <{/foreach}>
+  </ul>
+<{foreach item=rss from=$data}>
+  <div id="rss-tabs-<{$rss.rss_sn}>">
+    <div class="well">
+      <h2><a href="<{$rss.link}>"><{$rss.title}></a></h2>
+    	<div>
+      <a href="<{$rss.link}>"><{$rss.link}></a>
+          <{if $isAdmin}>
+            <a href="admin/main.php?op=tad_rss_form&rss_sn=<{$rss.rss_sn}>" class="btn btn-mini btn-warning"><{$smarty.const._TAD_EDIT}></a>
+          <{/if}>
+    	</div>
+
+    </div>
+
+    <{foreach item=item from=$rss.content}>
+      <h3><a href="<{$item.href}>" target="_blank"><{$item.title}></a></h3>
+
+      <span class="label pull-right"><{$item.date}></span>
+
+      <div class="well">
+        <{$item.description}>
+      </div>
+  	<{/foreach}>
+
+	</div>
+<{/foreach}>
+</div>
+<div class="clearfix"></div>
