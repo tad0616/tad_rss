@@ -1,11 +1,12 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// 本模組由 tad 製作
-// 製作日期：2009-10-20
-// $Id:$
-// ------------------------------------------------------------------------- //
-
 include_once "../../mainfile.php";
+if($xoopsModuleConfig['use_pda']=='1'){
+  if(file_exists(XOOPS_ROOT_PATH."/modules/tadtools/mobile_device_detect.php")){
+    include_once XOOPS_ROOT_PATH."/modules/tadtools/mobile_device_detect.php";
+    mobile_device_detect(true,false,true,true,true,true,true,'pda.php',false);
+  }
+}
+
 include_once "function.php";
 
 //判斷是否對該模組有管理權限
