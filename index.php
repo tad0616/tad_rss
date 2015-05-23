@@ -27,7 +27,7 @@ function list_tad_rss($maxitems=5){
     foreach($all as $k=>$v){
       $$k=$v;
     }
-    
+
     $rss=get_rss_by_simplepie($rss_sn,$url,$maxitems);
 
 
@@ -71,7 +71,7 @@ function get_rss_by_simplepie($rss_sn="",$url="",$maxitems=5){
 		$content[$i]['date']=$date;
 		$content[$i]['href']=$href;
 		$content[$i]['title']=$title;
-		$content[$i]['description']=$description;
+		$content[$i]['description']= nl2br(strip_tags($description));
 		$i++;
 	}
 
@@ -88,7 +88,7 @@ $xoopsTpl->assign( "toolbar" , toolbar_bootstrap($interface_menu)) ;
 $xoopsTpl->assign( "bootstrap" , get_bootstrap()) ;
 $xoopsTpl->assign( "jquery" , get_jquery(true)) ;
 $xoopsTpl->assign( "isAdmin" , $isAdmin) ;
-  
+
 switch($op){
 
 

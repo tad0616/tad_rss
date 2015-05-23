@@ -1,14 +1,9 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// 本模組由 tad 製作
-// 製作日期：2009-10-20
-// $Id:$
-// ------------------------------------------------------------------------- //
 $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name'] = _MI_TADRSS_NAME;
-$modversion['version'] = 2.1;
+$modversion['version'] = 2.11;
 $modversion['description'] = _MI_TADRSS_DESC;
 $modversion['author'] = _MI_TADRSS_AUTHOR;
 $modversion['credits'] = _MI_TADRSS_CREDITS;
@@ -19,7 +14,7 @@ $modversion['image'] = "images/logo_{$xoopsConfig['language']}.png";
 $modversion['dirname'] = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
-$modversion['release_date'] = '2013/07/08';
+$modversion['release_date'] = '2014/09/25';
 $modversion['module_website_url'] = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
 $modversion['module_status'] = 'release';
@@ -86,4 +81,10 @@ $modversion['config'][1]['valuetype']	= 'int';
 $modversion['config'][1]['default']	= '10';
 
 
+$modversion['config'][2]['name'] = 'use_pda';
+$modversion['config'][2]['title'] = '_MI_USE_PDA_TITLE';
+$modversion['config'][2]['description'] = '_MI_USE_PDA_TITLE_DESC';
+$modversion['config'][2]['formtype'] = 'yesno';
+$modversion['config'][2]['valuetype'] = 'int';
+$modversion['config'][2]['default'] = '1';
 ?>
