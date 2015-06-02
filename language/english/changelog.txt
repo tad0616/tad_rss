@@ -1,31 +1,24 @@
-《Tad RSS 2.11》2014-09-25釋出
+"Tad RSS 2.1" 2014-01-13 release
 ================================================
- 1.精簡不必要的函數
- 2.修改程式，使之符合無障礙網頁規範
+  1. Fixed block HTML tags Incorrect bug
+  2. Add the open or closed setting mobile devices page (thanks geek01 provide action page)
 
 
-《Tad RSS 2.1》2014-01-13釋出
+"Tad RSS 2.0" 2013-07-08 release
 ================================================
- 1.修正區塊HTML標籤不正確的bug
- 2.加入開啟或關閉行動裝置頁面的設定（感謝geek01提供行動頁面）
+  1. Modify the standard format XOOPS 2.5 modules
+  2. Cancel picture shows (in speed) and column
+  3. detailed oriented model, can transform online free forum
+  4. Support BootStrap
+  5. Add the article summary
+  6. Add the English language
+  7. change tab type presentation
 
 
-《Tad RSS 2.0》2013-07-08釋出
+
+"Tad RSS 1.1" 2009-10-21 release
 ================================================
- 1.修改為標準 XOOPS 2.5 模組格式
- 2.取消圖片顯示（以加快速度）及分欄
- 3.細緻化樣板，可線上自由改造版面
- 4.支援BootStrap
- 5.加入文章摘要
- 6.加入英文語系
- 7.改為頁籤式呈現
-
-
-
-《Tad RSS 1.1》2009-10-21釋出
-================================================
- 1.加入自動首則新聞縮圖功能（不用自己上傳圖片）
- 2.加入各種版面欄位控制項目
- 3.加入日期顯示
- 4.修正一些bug
-
+  1. Add automatic first news Thumbnail function (do not have to upload pictures)
+  2. Add the various column layout control project
+  3. Add date display
+  4. Fixed some bug
