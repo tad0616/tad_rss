@@ -6,10 +6,8 @@
 // ------------------------------------------------------------------------- //
 
 include_once "../../tadtools/language/{$xoopsConfig['language']}/admin_common.php";
-define("_TAD_NEED_TADTOOLS","Need modules/tadtools. You can download tadtools from <a href='http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50' target='_blank'>Tad's web</a>.");
+define('_TAD_NEED_TADTOOLS', "This module needs TadTools module. You can download TadTools from <a href='http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50' target='_blank'>Tad's web</a>.");
 
-define("_MA_TADRSS_TITLE","Site name");
-define("_MA_TADRSS_URL","RSS feed");
-define("_MA_TADRSS_ENABLE","Enable?");
-
-?>
+define('_MA_TADRSS_TITLE', 'Site name');
+define('_MA_TADRSS_URL', 'RSS feed');
+define('_MA_TADRSS_ENABLE', 'Enable?');
