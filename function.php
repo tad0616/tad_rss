@@ -1,20 +1,10 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// ¥»¼Ò²Õ¥Ñ tad »s§@
-// »s§@¤é´Á¡G2009-10-20
-// $Id:$
-// ------------------------------------------------------------------------- //
-
-//¤Þ¤JTadToolsªº¨ç¦¡®w
-if(!file_exists(XOOPS_ROOT_PATH."/modules/tadtools/tad_function.php")){
- redirect_header("http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50",3, _TAD_NEED_TADTOOLS);
+//å¼•å…¥TadToolsçš„å‡½å¼åº«
+if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/tad_function.php")) {
+    redirect_header("http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50", 3, _TAD_NEED_TADTOOLS);
 }
-include_once XOOPS_ROOT_PATH."/modules/tadtools/tad_function.php";
-
+include_once XOOPS_ROOT_PATH . "/modules/tadtools/tad_function.php";
 
 include_once "function_block.php";
 
-/********************* ¹w³]¨ç¼Æ *********************/
-
-
-?>
+/********************* é è¨­å‡½æ•¸ *********************/

@@ -1,69 +1,70 @@
 <?php
-if(file_exists("mainfile.php")){
-  include_once "mainfile.php";
-}elseif("../../mainfile.php"){
-  include_once "../../mainfile.php";
+if (file_exists("mainfile.php")) {
+    include_once "mainfile.php";
+} elseif ("../../mainfile.php") {
+    include_once "../../mainfile.php";
 }
 
-include_once XOOPS_ROOT_PATH."/modules/tad_rss/function.php";
+include_once XOOPS_ROOT_PATH . "/modules/tad_rss/function.php";
 
 //列出所有tad_rss資料
-function list_tad_rss($maxitems=5){
-  global $xoopsDB,$xoopsModule,$xoopsModuleConfig,$xoopsTpl;
+function list_tad_rss($maxitems = 5)
+{
+    global $xoopsDB, $xoopsModule, $xoopsModuleConfig, $xoopsTpl;
 
-  $sql = "select * from ".$xoopsDB->prefix("tad_rss")." where enable='1'";
+    $sql = "select * from " . $xoopsDB->prefix("tad_rss") . " where enable='1'";
 
-  $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
 
-  $data="";
-  //$i=0;
-  while($all=$xoopsDB->fetchArray($result)){
-    //以下會產生這些變數： $rss_sn , $title , $url , $enable
-    foreach($all as $k=>$v){
-      $$k=$v;
-    }
-    
-    $rss=get_rss_by_simplepie($rss_sn,$url,$maxitems);
+    $data = "";
+    //$i=0;
+    while ($all = $xoopsDB->fetchArray($result)) {
+        //以下會產生這些變數： $rss_sn , $title , $url , $enable
+        foreach ($all as $k => $v) {
+            $$k = $v;
+        }
 
-    $data.="
+        $rss = get_rss_by_simplepie($rss_sn, $url, $maxitems);
+
+        $data .= "
         <ul data-role='listview' data-inset='false' data-header-theme='d' data-divider-theme='d'>
         <li data-role='list-divider'>{$title}</li>
         {$rss}
         </ul>
     ";
-  }
+    }
 
-  return $data;
+    return $data;
 }
 
-
 //以 simplepie 來取得RSS
-function get_rss_by_simplepie($rss_sn="",$url="",$maxitems=5){
+function get_rss_by_simplepie($rss_sn = "", $url = "", $maxitems = 5)
+{
 
-  //require_once(XOOPS_ROOT_PATH.'/modules/tad_rss/class/simplepie/simplepie.inc');
-  require_once(XOOPS_ROOT_PATH.'/modules/tad_rss/class/simplepie/SimplePie.compiled.php');
-  $feed = new SimplePie();
-  $feed->set_output_encoding(_CHARSET);
-  $feed->set_feed_url($url);
-  $feed->set_cache_location(XOOPS_ROOT_PATH."/uploads/simplepie_cache");
-  $feed->init();
-  $feed->handle_content_type();
+    //require_once(XOOPS_ROOT_PATH.'/modules/tad_rss/class/simplepie/simplepie.inc');
+    require_once XOOPS_ROOT_PATH . '/modules/tad_rss/class/simplepie/SimplePie.compiled.php';
+    $feed = new SimplePie();
+    $feed->set_output_encoding(_CHARSET);
+    $feed->set_feed_url($url);
+    $feed->set_cache_location(XOOPS_ROOT_PATH . "/uploads/simplepie_cache");
+    $feed->init();
+    $feed->handle_content_type();
 
-  $web_title=$feed->get_title();
-  $web_link=$feed->get_permalink();
-  $web_description=$feed->get_description();
+    $web_title       = $feed->get_title();
+    $web_link        = $feed->get_permalink();
+    $web_description = $feed->get_description();
 
-  $content="";
+    $content = "";
 
-  foreach ($feed->get_items(0, $maxitems) as $item) {
-    $href = $item->get_permalink();
-    $title = $item->get_title();
-    $date= $item->get_date("Y-m-d H:i");
-    $description= $item->get_description();
-    $description_clear=strip_tags($description);
-    $description_body=strip_tags($description, '<p><a><img>');
+    foreach ($feed->get_items(0, $maxitems) as $item) {
+        $href              = $item->get_permalink();
+        $title             = $item->get_title();
+        $date              = $item->get_date("Y-m-d H:i");
+        $description       = $item->get_description();
+        $description_clear = strip_tags($description);
+        $description_body  = strip_tags($description, '<p><a><img>');
 
-    $content.="
+        $content .= "
       <li data-icon='false' class='inner-wrap'>
         <h2>{$title}</h2>
         <p style='color:#999'>{$description_clear}</p>
@@ -77,92 +78,97 @@ function get_rss_by_simplepie($rss_sn="",$url="",$maxitems=5){
           </ul>
       </li>
     ";
-  }
+    }
 
-  return $content;
+    return $content;
 }
 
 //取得所有RSS清單
-function get_rss_cate_list(){
-  global $xoopsDB;
+function get_rss_cate_list()
+{
+    global $xoopsDB;
 
-  $list="
+    $list = "
   <ul data-role='listview' style='margin-top:-16px;'>
     <li data-icon='delete'>
       <a href='#' data-rel='close'>RSS Feeds List</a>
     </li>
     <li data-icon='false'><a href='{$_SERVER['PHP_SELF']}'>All</a></li>";
 
-  $sql = "select * from ".$xoopsDB->prefix("tad_rss")." where enable='1'";
-  $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
+    $sql    = "select * from " . $xoopsDB->prefix("tad_rss") . " where enable='1'";
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
 
-  while(list($rss_sn,$title,$url)=$xoopsDB->fetchRow($result)){
+    while (list($rss_sn, $title, $url) = $xoopsDB->fetchRow($result)) {
 
-    $list.="<li data-icon='false'><a href='{$_SERVER['PHP_SELF']}?op=view&rss_sn={$rss_sn}'>{$title}</a></li>";
-  }
-  $list.="</ul>";
-  return $list;
+        $list .= "<li data-icon='false'><a href='{$_SERVER['PHP_SELF']}?op=view&rss_sn={$rss_sn}'>{$title}</a></li>";
+    }
+    $list .= "</ul>";
+    return $list;
 }
 
 //取得某個RSS資料
-function get_one_rss($rss_sn){
-  global $xoopsModuleConfig;
-  $one=get_rss_data($rss_sn);
-  $url=$one['url'];
-  $num=2;
-  $maxitems=$xoopsModuleConfig['show_num']*$num;
-  $rss=get_rss_by_simplepie($rss_sn,$url,$maxitems);
+function get_one_rss($rss_sn)
+{
+    global $xoopsModuleConfig;
+    $one      = get_rss_data($rss_sn);
+    $url      = $one['url'];
+    $num      = 2;
+    $maxitems = $xoopsModuleConfig['show_num'] * $num;
+    $rss      = get_rss_by_simplepie($rss_sn, $url, $maxitems);
 
-      $data="
+    $data = "
         <ul data-role='listview' data-inset='false' data-header-theme='c' data-divider-theme='c'>
         {$rss}
         </ul>
       ";
 
-  return $data;
+    return $data;
 }
 
 //以流水號取得某筆RSS資料
-function get_rss_data($rss_sn=""){
-  global $xoopsDB;
-  if(empty($rss_sn))return;
-  $sql = "select * from ".$xoopsDB->prefix("tad_rss")." where rss_sn='$rss_sn'";
-  $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
-  $data=$xoopsDB->fetchArray($result);
-  return $data;
+function get_rss_data($rss_sn = "")
+{
+    global $xoopsDB;
+    if (empty($rss_sn)) {
+        return;
+    }
+
+    $sql    = "select * from " . $xoopsDB->prefix("tad_rss") . " where rss_sn='$rss_sn'";
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $data   = $xoopsDB->fetchArray($result);
+    return $data;
 }
 
-
 /*-----------執行動作判斷區----------*/
-$op=(empty($_REQUEST['op']))?"":$_REQUEST['op'];
-$rss_sn=(isset($_REQUEST['rss_sn']))?intval($_REQUEST['rss_sn']) : 0;
+include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+$op     = system_CleanVars($_REQUEST, 'op', '', 'string');
+$rss_sn = system_CleanVars($_REQUEST, 'rss_sn', 0, 'int');
 
-switch($op){
+switch ($op) {
 
-  case "view":
-    $main=get_one_rss($rss_sn);
-    $one=get_rss_data($rss_sn);
-    $title=$one['title'];
-  break;
+    case "view":
+        $main  = get_one_rss($rss_sn);
+        $one   = get_rss_data($rss_sn);
+        $title = $one['title'];
+        break;
 
-  default:
-    $main=list_tad_rss($xoopsModuleConfig['show_num']);
-    $title=$xoopsModule->getVar('name');
-  break;
+    default:
+        $main  = list_tad_rss($xoopsModuleConfig['show_num']);
+        $title = $xoopsModule->getVar('name');
+        break;
 }
 
 /*-----------秀出結果區--------------*/
-$menu=get_rss_cate_list();
-
+$menu = get_rss_cate_list();
 
 echo "
 <!DOCTYPE html>
-<html lang='"._LANGCODE."'>
+<html lang='" . _LANGCODE . "'>
 <head>
-  <meta charset='"._CHARSET."'>
+  <meta charset='" . _CHARSET . "'>
   <meta name='viewport' content='initial-scale=1.0, user-scalable=no'>
-  <title>{$title}</title>  
-  <link href='http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css' rel='stylesheet' type='text/css'/>  
+  <title>{$title}</title>
+  <link href='http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css' rel='stylesheet' type='text/css'/>
   <style>
   /*.ui-header .ui-title {
     margin: 0.6em 2% 0.8em !important;
@@ -180,7 +186,7 @@ echo "
   .inner-content li{
     background-color: transparent;
     border: 0;
-  }  
+  }
   .inner-body {
     white-space: normal;
   }
@@ -198,8 +204,8 @@ echo "
     text-align: center;
   }
   </style>
-  
-  <script src='".XOOPS_URL."/modules/tadtools/jquery/jquery.js' type='text/javascript'></script>
+
+  <script src='" . XOOPS_URL . "/modules/tadtools/jquery/jquery.js' type='text/javascript'></script>
   <script>
     $(document).bind('mobileinit', function(){
       $.mobile.defaultPageTransition = 'slide';
@@ -207,13 +213,13 @@ echo "
     });
   </script>
   <script>
-  $(document).bind('pagebeforeshow', '#index', function(){    
+  $(document).bind('pagebeforeshow', '#index', function(){
     $('.ui-header').attr('data-position','fixed');
     $('.ui-body-null').trigger('create');
   });
   </script>
   <script src='http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js' type='text/javascript'></script>
-   
+
 </head>
 <body>
 <!-- Home -->
@@ -231,4 +237,3 @@ echo "
 </div>
 </body>
 </html>";
-?>

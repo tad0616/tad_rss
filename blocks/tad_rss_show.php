@@ -1,128 +1,118 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// ¥»¼Ò²Õ¥Ñ tad »s§@
-// »s§@¤é´Á¡G2009-10-20
-// $Id:$
-// ------------------------------------------------------------------------- //
+include_once XOOPS_ROOT_PATH . "/modules/tad_rss/function_block.php";
 
-include_once XOOPS_ROOT_PATH."/modules/tad_rss/function_block.php";
+//å€å¡Šä¸»å‡½å¼ (å‹ç«™æ¶ˆæ¯(tad_rss_show))
+function tad_rss_show($options = array("", 3, 170))
+{
+    global $xoopsDB;
 
+    $in = (empty($options[0])) ? "" : "and rss_sn in({$options[0]})";
 
-//°Ï¶ô¥D¨ç¦¡ (¤Í¯¸®ø®§(tad_rss_show))
-function tad_rss_show($options=array("",3,170)){
-	global $xoopsDB;
+    $modhandler        = &xoops_gethandler('module');
+    $xoopsModule       = &$modhandler->getByDirname("tad_rss");
+    $config_handler    = &xoops_gethandler('config');
+    $xoopsModuleConfig = &$config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
 
-	$in=(empty($options[0]))?"":"and rss_sn in({$options[0]})";
+    $sql = "select * from " . $xoopsDB->prefix("tad_rss") . " where enable='1' $in";
 
-  $modhandler = &xoops_gethandler('module');
-  $xoopsModule = &$modhandler->getByDirname("tad_rss");
-  $config_handler =& xoops_gethandler('config');
-  $xoopsModuleConfig =& $config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, die($sql));
 
-	$sql = "select * from ".$xoopsDB->prefix("tad_rss")." where enable='1' $in";
+    $rss_data = "";
 
-	$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, die($sql));
+    $n = 0;
+    while ($all = $xoopsDB->fetchArray($result)) {
+        //ä»¥ä¸‹æœƒç”¢ç”Ÿé€™äº›è®Šæ•¸ï¼š $rss_sn , $title , $url , $enable
+        foreach ($all as $k => $v) {
+            $$k = $v;
+        }
 
-	$rss_data="";
+        $rss = get_rss_by_simplepie_block($url, $options[1]);
 
-  $n=0;
-	while($all=$xoopsDB->fetchArray($result)){
-	  //¥H¤U·|²£¥Í³o¨ÇÅÜ¼Æ¡G $rss_sn , $title , $url , $enable
-    foreach($all as $k=>$v){
-      $$k=$v;
+        $block['rss_data'][$n]['link']    = $url;
+        $block['rss_data'][$n]['title']   = $title;
+        $block['rss_data'][$n]['content'] = $rss;
+        $n++;
+
     }
-
-    $rss=get_rss_by_simplepie_block($url,$options[1]);
-
-    $block['rss_data'][$n]['link']=$url;
-    $block['rss_data'][$n]['title']=$title;
-    $block['rss_data'][$n]['content']=$rss;
-		$n++;
-
-	}
-
-	return $block;
+    $block['bootstrap_version'] = $_SESSION['bootstrap'];
+    $block['row']               = $_SESSION['bootstrap'] == '3' ? 'row' : 'row-fluid';
+    $block['span']              = $_SESSION['bootstrap'] == '3' ? 'col-md-' : 'span';
+    return $block;
 }
 
 //
-function tad_rss_show_edit($options){
-	global $xoopsDB;
+function tad_rss_show_edit($options)
+{
+    global $xoopsDB;
 
-	if(!empty($options[0])){
-    $sc=explode(",",$options[0]);
-  }
-  
-  $js="<script>
+    if (!empty($options[0])) {
+        $sc = explode(",", $options[0]);
+    }
+
+    $js = "<script>
     function bbv(col){
       \$i=0;
       var arr = new Array();";
 
-      $chkbox="";
+    $chkbox = "";
 
-      $sql = "select * from ".$xoopsDB->prefix("tad_rss")." where enable='1'";
+    $sql = "select * from " . $xoopsDB->prefix("tad_rss") . " where enable='1'";
 
-      $result = $xoopsDB->query($sql);
-        while($all=$xoopsDB->fetchArray($result)){
-            //¥H¤U·|²£¥Í³o¨ÇÅÜ¼Æ¡G $rss_sn , $title , $url , $enable
-          foreach($all as $k=>$v){
-            $$k=$v;
-          }
+    $result = $xoopsDB->query($sql);
+    while ($all = $xoopsDB->fetchArray($result)) {
+        //ä»¥ä¸‹æœƒç”¢ç”Ÿé€™äº›è®Šæ•¸ï¼š $rss_sn , $title , $url , $enable
+        foreach ($all as $k => $v) {
+            $$k = $v;
+        }
 
-          $js.="if(document.getElementById('c{$rss_sn}').checked){
+        $js .= "if(document.getElementById('c{$rss_sn}').checked){
                arr[\$i] = document.getElementById('c{$rss_sn}').value;
                  \$i++;
                 }";
 
-
-          $chked=(in_array($rss_sn,$sc))?"checked":"";
-          $chkbox.="<input type='checkbox' id='c{$rss_sn}' value='{$rss_sn}'  onChange=bbv() $chked>$title";
-        }
-        $js.="document.getElementById('bb').value=arr.join(',');
+        $chked = (in_array($rss_sn, $sc)) ? "checked" : "";
+        $chkbox .= "<input type='checkbox' id='c{$rss_sn}' value='{$rss_sn}'  onChange=bbv() $chked>$title";
+    }
+    $js .= "document.getElementById('bb').value=arr.join(',');
     }
     </script>";
-    
-    
 
-	$form="$js
-	"._MB_TADRSS_TAD_RSS_SHOW_EDIT_BITEM0."{$chkbox}
+    $form = "$js
+	" . _MB_TADRSS_TAD_RSS_SHOW_EDIT_BITEM0 . "{$chkbox}
 	<INPUT type='hidden' name='options[0]' id='bb' value='{$options[0]}'>
 	<br>
-	"._MB_TADRSS_TAD_RSS_SHOW_EDIT_BITEM1."
+	" . _MB_TADRSS_TAD_RSS_SHOW_EDIT_BITEM1 . "
 	<INPUT type='text' name='options[1]' value='{$options[1]}'>
-	
+
 	";
-	return $form;
+    return $form;
 }
 
+//ä»¥ simplepie ä¾†å–å¾—RSS
+function get_rss_by_simplepie_block($url = "", $maxitems = 5)
+{
 
+    require_once XOOPS_ROOT_PATH . '/modules/tad_rss/class/simplepie/SimplePie.compiled.php';
+    $feed = new SimplePie();
+    $feed->set_output_encoding(_CHARSET);
+    $feed->set_feed_url($url);
+    $feed->set_cache_location(XOOPS_ROOT_PATH . "/uploads/simplepie_cache");
+    $feed->init();
+    $feed->handle_content_type();
 
-//¥H simplepie ¨Ó¨ú±oRSS
-function get_rss_by_simplepie_block($url="",$maxitems=5){
+    $n = 0;
+    foreach ($feed->get_items(0, $maxitems) as $item) {
+        $href        = $item->get_permalink();
+        $title       = $item->get_title();
+        $date        = $item->get_date("m/d");
+        $description = $item->get_description();
 
-	require_once(XOOPS_ROOT_PATH.'/modules/tad_rss/class/simplepie/SimplePie.compiled.php');
-	$feed = new SimplePie();
-	$feed->set_output_encoding(_CHARSET);
-	$feed->set_feed_url($url);
-	$feed->set_cache_location(XOOPS_ROOT_PATH."/uploads/simplepie_cache");
-	$feed->init();
-	$feed->handle_content_type();
+        $arr[$n]['date']        = $date;
+        $arr[$n]['link']        = $href;
+        $arr[$n]['title']       = $title;
+        $arr[$n]['description'] = $description;
+        $n++;
+    }
 
-  $n=0;
-	foreach ($feed->get_items(0, $maxitems) as $item) {
-		$href = $item->get_permalink();
-		$title = $item->get_title();
-		$date= $item->get_date("m/d");
-		$description= $item->get_description();
-
-    $arr[$n]['date']=$date;
-    $arr[$n]['link']=$href;
-    $arr[$n]['title']=$title;
-    $arr[$n]['description']=$description;
-    $n++;
-	}
-
-	return $arr;
+    return $arr;
 }
-
-
-?>

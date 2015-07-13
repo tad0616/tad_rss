@@ -1,3 +1,10 @@
+"Tad RSS 2.2" 2015-07-11 release
+================================================
+ 1.When using the bootstrap sets, auto-hide pda.php
+ 2.Add BootStrap3 templates
+ 3.Fixed PHP syntax specification to conform PSR2
+
+
 "Tad RSS 2.1" 2014-01-13 release
 ================================================
   1. Fixed block HTML tags Incorrect bug
