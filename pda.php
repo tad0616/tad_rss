@@ -14,7 +14,7 @@ function list_tad_rss($maxitems = 5)
 
     $sql = "select * from " . $xoopsDB->prefix("tad_rss") . " where enable='1'";
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
     $data = "";
     //$i=0;
@@ -96,7 +96,7 @@ function get_rss_cate_list()
     <li data-icon='false'><a href='{$_SERVER['PHP_SELF']}'>All</a></li>";
 
     $sql    = "select * from " . $xoopsDB->prefix("tad_rss") . " where enable='1'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
     while (list($rss_sn, $title, $url) = $xoopsDB->fetchRow($result)) {
 
@@ -134,7 +134,7 @@ function get_rss_data($rss_sn = "")
     }
 
     $sql    = "select * from " . $xoopsDB->prefix("tad_rss") . " where rss_sn='$rss_sn'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
     $data   = $xoopsDB->fetchArray($result);
     return $data;
 }

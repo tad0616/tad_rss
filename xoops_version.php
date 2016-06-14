@@ -3,7 +3,7 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name']        = _MI_TADRSS_NAME;
-$modversion['version']     = 2.2;
+$modversion['version']     = 2.3;
 $modversion['description'] = _MI_TADRSS_DESC;
 $modversion['author']      = _MI_TADRSS_AUTHOR;
 $modversion['credits']     = _MI_TADRSS_CREDITS;
@@ -14,7 +14,7 @@ $modversion['image']       = "images/logo_{$xoopsConfig['language']}.png";
 $modversion['dirname']     = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
-$modversion['release_date']        = '2015/07/11';
+$modversion['release_date']        = '2016/05/22';
 $modversion['module_website_url']  = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
 $modversion['module_status']       = 'release';
@@ -51,16 +51,8 @@ $modversion['onUpdate']  = "include/onUpdate.php";
 //---樣板設定---//
 $modversion['templates']                    = array();
 $i                                          = 1;
-$modversion['templates'][$i]['file']        = 'tad_rss_index.html';
-$modversion['templates'][$i]['description'] = 'tad_rss_index.html';
-
-$i++;
 $modversion['templates'][$i]['file']        = 'tad_rss_index_b3.html';
 $modversion['templates'][$i]['description'] = 'tad_rss_index_b3.html';
-
-$i++;
-$modversion['templates'][$i]['file']        = 'tad_rss_adm_main.html';
-$modversion['templates'][$i]['description'] = 'tad_rss_adm_main.html';
 
 $i++;
 $modversion['templates'][$i]['file']        = 'tad_rss_adm_main_b3.html';

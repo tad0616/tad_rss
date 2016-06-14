@@ -34,9 +34,6 @@ function tad_rss_show($options = array("", 3, 170))
         $n++;
 
     }
-    $block['bootstrap_version'] = $_SESSION['bootstrap'];
-    $block['row']               = $_SESSION['bootstrap'] == '3' ? 'row' : 'row-fluid';
-    $block['span']              = $_SESSION['bootstrap'] == '3' ? 'col-md-' : 'span';
     return $block;
 }
 

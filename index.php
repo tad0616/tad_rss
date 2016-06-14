@@ -12,7 +12,7 @@ function list_tad_rss($maxitems = 5)
 
     $sql = "select * from " . $xoopsDB->prefix("tad_rss") . " where enable='1'";
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
     $data = "";
     $i    = 0;
