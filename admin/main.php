@@ -47,7 +47,7 @@ function insert_tad_rss()
 {
     global $xoopsDB, $xoopsUser;
 
-    require_once '../class/simplepie/simplepie.inc';
+    require_once '../class/simplepie/SimplePie.php';
     $feed = new SimplePie();
     $feed->set_feed_url($_POST['url']);
     $feed->set_cache_location(XOOPS_ROOT_PATH . "/uploads/simplepie_cache");

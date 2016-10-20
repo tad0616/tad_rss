@@ -40,8 +40,7 @@ function list_tad_rss($maxitems = 5)
 function get_rss_by_simplepie($rss_sn = "", $url = "", $maxitems = 5)
 {
 
-    //require_once(XOOPS_ROOT_PATH.'/modules/tad_rss/class/simplepie/simplepie.inc');
-    require_once XOOPS_ROOT_PATH . '/modules/tad_rss/class/simplepie/SimplePie.compiled.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tad_rss/class/simplepie/SimplePie.php';
     $feed = new SimplePie();
     $feed->set_output_encoding(_CHARSET);
     $feed->set_feed_url($url);
