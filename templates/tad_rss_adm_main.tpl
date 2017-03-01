@@ -9,14 +9,14 @@ function delete_tad_rss_func(rss_sn){
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-sm-12">
       <form action="main.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
         <{if $rss_sn}>
           <div class="form-group">
-            <div class="col-md-8">
+            <div class="col-sm-8">
               <input type="text" name="title" value="<{$title}>" class="form-control" placeholder="<{$smarty.const._MA_TADRSS_TITLE}>">
             </div>
-            <div class="col-md-4">
+            <div class="col-sm-4">
               <label class="radio-inline">
                 <input type="radio" name="enable" id="enable" value="1" <{$enable1}>><{$smarty.const._TAD_ENABLE}>
               </label>
@@ -30,10 +30,10 @@ function delete_tad_rss_func(rss_sn){
         <{/if}>
 
         <div class="form-group">
-          <div class="col-md-11">
+          <div class="col-sm-11">
             <input type="text" name="url" value="<{$rss_url}>" id="url" placeholder="<{$smarty.const._MA_TADRSS_URL}>" class="form-control">
           </div>
-          <div class="col-md-1">
+          <div class="col-sm-1">
             <input type="hidden" name="op" value="<{$next_op}>">
             <button type="submit" class="btn btn-primary"><{$smarty.const._TAD_SAVE}></button>
           </div>
