@@ -1,11 +1,11 @@
 <?php
-/*-----------¤Ş¤JÀÉ®×°Ï--------------*/
+/*-----------å¼•å…¥æª”æ¡ˆå€--------------*/
 include "header.php";
 $xoopsOption['template_main'] = "tad_rss_index.tpl";
 include_once XOOPS_ROOT_PATH . "/header.php";
-/*-----------function°Ï--------------*/
+/*-----------functionå€--------------*/
 
-//¦C¥X©Ò¦³tad_rss¸ê®Æ
+//åˆ—å‡ºæ‰€æœ‰tad_rssè³‡æ–™
 function list_tad_rss($maxitems = 5)
 {
     global $xoopsDB, $xoopsModule, $xoopsModuleConfig, $xoopsTpl;
@@ -17,7 +17,7 @@ function list_tad_rss($maxitems = 5)
     $data = "";
     $i    = 0;
     while ($all = $xoopsDB->fetchArray($result)) {
-        //¥H¤U·|²£¥Í³o¨ÇÅÜ¼Æ¡G $rss_sn , $title , $url , $enable
+        //ä»¥ä¸‹æœƒç”¢ç”Ÿé€™äº›è®Šæ•¸ï¼š $rss_sn , $title , $url , $enable
         foreach ($all as $k => $v) {
             $$k = $v;
         }
@@ -36,10 +36,9 @@ function list_tad_rss($maxitems = 5)
     $xoopsTpl->assign('data', $data);
 }
 
-//¥H simplepie ¨Ó¨ú±oRSS
+//ä»¥ simplepie ä¾†å–å¾—RSS
 function get_rss_by_simplepie($rss_sn = "", $url = "", $maxitems = 5)
 {
-
     require_once XOOPS_ROOT_PATH . '/modules/tad_rss/class/simplepie/SimplePie.php';
     $feed = new SimplePie();
     $feed->set_output_encoding(_CHARSET);
@@ -72,7 +71,7 @@ function get_rss_by_simplepie($rss_sn = "", $url = "", $maxitems = 5)
     return $arr;
 }
 
-/*-----------°õ¦æ°Ê§@§PÂ_°Ï----------*/
+/*-----------åŸ·è¡Œå‹•ä½œåˆ¤æ–·å€----------*/
 include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 
@@ -87,5 +86,5 @@ switch ($op) {
         break;
 }
 
-/*-----------¨q¥Xµ²ªG°Ï--------------*/
+/*-----------ç§€å‡ºçµæœå€--------------*/
 include_once XOOPS_ROOT_PATH . '/footer.php';

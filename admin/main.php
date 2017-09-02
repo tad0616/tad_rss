@@ -39,7 +39,6 @@ function tad_rss_form($rss_sn = "")
     $xoopsTpl->assign('enable0', chk($enable, '0'));
     $xoopsTpl->assign('rss_url', $rss_url);
     $xoopsTpl->assign('next_op', $op);
-
 }
 
 //新增資料到tad_rss中
@@ -71,7 +70,7 @@ function list_tad_rss($rss_sn = 1)
 {
     global $xoopsDB, $xoopsModule, $xoopsTpl;
 
-    $sql = "select * from " . $xoopsDB->prefix("tad_rss") . "";
+    $sql = "SELECT * FROM " . $xoopsDB->prefix("tad_rss") . "";
 
     //getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
     $PageBar = getPageBar($sql, 20, 10);
@@ -109,9 +108,9 @@ function get_tad_rss($rss_sn = "")
         return;
     }
 
-    $sql    = "select * from " . $xoopsDB->prefix("tad_rss") . " where rss_sn='$rss_sn'";
+    $sql = "select * from " . $xoopsDB->prefix("tad_rss") . " where rss_sn='$rss_sn'";
     $result = $xoopsDB->query($sql) or web_error($sql);
-    $data   = $xoopsDB->fetchArray($result);
+    $data = $xoopsDB->fetchArray($result);
     return $data;
 }
 
@@ -184,7 +183,7 @@ switch ($op) {
         list_tad_rss($rss_sn);
         break;
 
-        /*---判斷動作請貼在上方---*/
+    /*---判斷動作請貼在上方---*/
 }
 
 /*-----------秀出結果區--------------*/

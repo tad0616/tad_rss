@@ -32,7 +32,6 @@ function tad_rss_show($options = array("", 3, 170))
         $block['rss_data'][$n]['title']   = $title;
         $block['rss_data'][$n]['content'] = $rss;
         $n++;
-
     }
     return $block;
 }
@@ -53,7 +52,7 @@ function tad_rss_show_edit($options)
 
     $chkbox = "";
 
-    $sql = "select * from " . $xoopsDB->prefix("tad_rss") . " where enable='1'";
+    $sql = "SELECT * FROM " . $xoopsDB->prefix("tad_rss") . " WHERE enable='1'";
 
     $result = $xoopsDB->query($sql);
     while ($all = $xoopsDB->fetchArray($result)) {
@@ -67,7 +66,7 @@ function tad_rss_show_edit($options)
                  \$i++;
                 }";
 
-        $chked = (in_array($rss_sn, $sc)) ? "checked" : "";
+        $chked  = (in_array($rss_sn, $sc)) ? "checked" : "";
         $chkbox .= "<input type='checkbox' id='c{$rss_sn}' value='{$rss_sn}'  onChange=bbv() $chked>$title";
     }
     $js .= "document.getElementById('bb').value=arr.join(',');
@@ -88,7 +87,6 @@ function tad_rss_show_edit($options)
 //以 simplepie 來取得RSS
 function get_rss_by_simplepie_block($url = "", $maxitems = 5)
 {
-
     require_once XOOPS_ROOT_PATH . '/modules/tad_rss/class/simplepie/SimplePie.php';
     $feed = new SimplePie();
     $feed->set_output_encoding(_CHARSET);
