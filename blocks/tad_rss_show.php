@@ -8,10 +8,10 @@ function tad_rss_show($options = array("", 3, 170))
 
     $in = (empty($options[0])) ? "" : "and rss_sn in({$options[0]})";
 
-    $modhandler        = &xoops_gethandler('module');
-    $xoopsModule       = &$modhandler->getByDirname("tad_rss");
-    $config_handler    = &xoops_gethandler('config');
-    $xoopsModuleConfig = &$config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
+    $modhandler        = xoops_getHandler('module');
+    $xoopsModule       = $modhandler->getByDirname("tad_rss");
+    $config_handler    = xoops_getHandler('config');
+    $xoopsModuleConfig = $config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
 
     $sql = "select * from " . $xoopsDB->prefix("tad_rss") . " where enable='1' $in";
 
