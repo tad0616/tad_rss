@@ -8,7 +8,7 @@ if ($xoopsModuleConfig['use_pda'] == '1' and strpos($_SESSION['theme_kind'], 'bo
     }
 }
 
-//§PÂ_¬O§_¹ï¸Ó¼Ò²Õ¦³ºŞ²zÅv­­
+//åˆ¤æ–·æ˜¯å¦å°è©²æ¨¡çµ„æœ‰ç®¡ç†æ¬Šé™
 $isAdmin = false;
 if ($xoopsUser) {
     $module_id = $xoopsModule->getVar('mid');

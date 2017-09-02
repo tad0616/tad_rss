@@ -11,31 +11,31 @@ function xoops_module_update_tad_rss(&$module, $old_version)
     return true;
 }
 
-//§R°£¿ù»~ªº­«½ÆÄæ¦ì¤Î¼ËªOÀÉ
+//åˆªé™¤éŒ¯èª¤çš„é‡è¤‡æ¬„ä½åŠæ¨£æ¿æª”
 function chk_tad_rss_block()
 {
     global $xoopsDB;
     //die(var_export($xoopsConfig));
     include XOOPS_ROOT_PATH . '/modules/tad_rss/xoops_version.php';
 
-    //¥ı§ä¥X¸Ó¦³ªº°Ï¶ô¥H¤Î¹ïÀ³¼ËªO
+    //å…ˆæ‰¾å‡ºè©²æœ‰çš„å€å¡Šä»¥åŠå°æ‡‰æ¨£æ¿
     foreach ($modversion['blocks'] as $i => $block) {
         $show_func                = $block['show_func'];
         $tpl_file_arr[$show_func] = $block['template'];
         $tpl_desc_arr[$show_func] = $block['description'];
     }
 
-    //§ä¥X¥Ø«e©Ò¦³ªº¼ËªOÀÉ
+    //æ‰¾å‡ºç›®å‰æ‰€æœ‰çš„æ¨£æ¿æª”
     $sql = "SELECT bid,name,visible,show_func,template FROM `" . $xoopsDB->prefix("newblocks") . "`
     WHERE `dirname` = 'tad_rss' ORDER BY `func_num`";
     $result = $xoopsDB->query($sql);
     while (list($bid, $name, $visible, $show_func, $template) = $xoopsDB->fetchRow($result)) {
-        //°²¦p²{¦³ªº°Ï¶ô©M¼ËªO¹ï¤£¤W´N§R±¼
+        //å‡å¦‚ç¾æœ‰çš„å€å¡Šå’Œæ¨£æ¿å°ä¸ä¸Šå°±åˆªæ‰
         if ($template != $tpl_file_arr[$show_func]) {
             $sql = "delete from " . $xoopsDB->prefix("newblocks") . " where bid='{$bid}'";
             $xoopsDB->queryF($sql);
 
-            //³s¦P¼ËªO¥H¤Î¼ËªO¹êÅéÀÉ®×¤]­n§R±¼
+            //é€£åŒæ¨£æ¿ä»¥åŠæ¨£æ¿å¯¦é«”æª”æ¡ˆä¹Ÿè¦åˆªæ‰
             $sql = "delete from " . $xoopsDB->prefix("tplfile") . " as a
             left join " . $xoopsDB->prefix("tplsource") . "  as b on a.tpl_id=b.tpl_id
             where a.tpl_refid='$bid' and a.tpl_module='tad_rss' and a.tpl_type='block'";
@@ -47,26 +47,25 @@ function chk_tad_rss_block()
             $xoopsDB->queryF($sql);
         }
     }
-
 }
 
-//«Ø¥ß¥Ø¿ı
+//å»ºç«‹ç›®éŒ„
 function mk_dir($dir = "")
 {
-    //­YµL¥Ø¿ı¦WºÙ¨q¥XÄµ§i°T®§
+    //è‹¥ç„¡ç›®éŒ„åç¨±ç§€å‡ºè­¦å‘Šè¨Šæ¯
     if (empty($dir)) {
         return;
     }
 
-    //­Y¥Ø¿ı¤£¦s¦bªº¸Ü«Ø¥ß¥Ø¿ı
+    //è‹¥ç›®éŒ„ä¸å­˜åœ¨çš„è©±å»ºç«‹ç›®éŒ„
     if (!is_dir($dir)) {
         umask(000);
-        //­Y«Ø¥ß¥¢±Ñ¨q¥XÄµ§i°T®§
+        //è‹¥å»ºç«‹å¤±æ•—ç§€å‡ºè­¦å‘Šè¨Šæ¯
         mkdir($dir, 0777);
     }
 }
 
-//«ş¨©¥Ø¿ı
+//æ‹·è²ç›®éŒ„
 function full_copy($source = "", $target = "")
 {
     if (is_dir($source)) {
@@ -119,7 +118,6 @@ function delete_directory($dirname)
             } else {
                 delete_directory($dirname . '/' . $file);
             }
-
         }
     }
     closedir($dir_handle);

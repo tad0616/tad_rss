@@ -12,7 +12,7 @@ function list_tad_rss($maxitems = 5)
 {
     global $xoopsDB, $xoopsModule, $xoopsModuleConfig, $xoopsTpl;
 
-    $sql = "select * from " . $xoopsDB->prefix("tad_rss") . " where enable='1'";
+    $sql = "SELECT * FROM " . $xoopsDB->prefix("tad_rss") . " WHERE enable='1'";
 
     $result = $xoopsDB->query($sql) or web_error($sql);
 
@@ -40,7 +40,6 @@ function list_tad_rss($maxitems = 5)
 //以 simplepie 來取得RSS
 function get_rss_by_simplepie($rss_sn = "", $url = "", $maxitems = 5)
 {
-
     require_once XOOPS_ROOT_PATH . '/modules/tad_rss/class/simplepie/SimplePie.php';
     $feed = new SimplePie();
     $feed->set_output_encoding(_CHARSET);
@@ -94,11 +93,10 @@ function get_rss_cate_list()
     </li>
     <li data-icon='false'><a href='{$_SERVER['PHP_SELF']}'>All</a></li>";
 
-    $sql    = "select * from " . $xoopsDB->prefix("tad_rss") . " where enable='1'";
+    $sql = "SELECT * FROM " . $xoopsDB->prefix("tad_rss") . " WHERE enable='1'";
     $result = $xoopsDB->query($sql) or web_error($sql);
 
     while (list($rss_sn, $title, $url) = $xoopsDB->fetchRow($result)) {
-
         $list .= "<li data-icon='false'><a href='{$_SERVER['PHP_SELF']}?op=view&rss_sn={$rss_sn}'>{$title}</a></li>";
     }
     $list .= "</ul>";
@@ -132,9 +130,9 @@ function get_rss_data($rss_sn = "")
         return;
     }
 
-    $sql    = "select * from " . $xoopsDB->prefix("tad_rss") . " where rss_sn='$rss_sn'";
+    $sql = "select * from " . $xoopsDB->prefix("tad_rss") . " where rss_sn='$rss_sn'";
     $result = $xoopsDB->query($sql) or web_error($sql);
-    $data   = $xoopsDB->fetchArray($result);
+    $data = $xoopsDB->fetchArray($result);
     return $data;
 }
 
