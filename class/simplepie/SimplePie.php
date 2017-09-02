@@ -16999,7 +16999,7 @@ class SimplePie_Parser
 		{
 			libxml_clear_errors();
 			$xml = new XMLReader();
-			$xml->xml($data);
+			$xml->XML($data);
 			while (@$xml->read())
 			{
 				switch ($xml->nodeType)
