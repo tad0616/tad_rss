@@ -35,8 +35,7 @@ function tad_rss_form($rss_sn = "")
 
     $xoopsTpl->assign('rss_sn', $rss_sn);
     $xoopsTpl->assign('title', $title);
-    $xoopsTpl->assign('enable1', chk($enable, '1', '1'));
-    $xoopsTpl->assign('enable0', chk($enable, '0'));
+    $xoopsTpl->assign('enable', $enable);
     $xoopsTpl->assign('rss_url', $rss_url);
     $xoopsTpl->assign('next_op', $op);
 }
@@ -79,7 +78,7 @@ function list_tad_rss($rss_sn = 1)
 
     $result = $xoopsDB->query($sql) or web_error($sql);
 
-    $all_data = "";
+    $all_data = array();
     $i        = 0;
     while ($all = $xoopsDB->fetchArray($result)) {
         //以下會產生這些變數： $rss_sn , $title , $url , $enable
@@ -108,9 +107,9 @@ function get_tad_rss($rss_sn = "")
         return;
     }
 
-    $sql = "select * from " . $xoopsDB->prefix("tad_rss") . " where rss_sn='$rss_sn'";
+    $sql    = "select * from " . $xoopsDB->prefix("tad_rss") . " where rss_sn='$rss_sn'";
     $result = $xoopsDB->query($sql) or web_error($sql);
-    $data = $xoopsDB->fetchArray($result);
+    $data   = $xoopsDB->fetchArray($result);
     return $data;
 }
 
@@ -183,7 +182,7 @@ switch ($op) {
         list_tad_rss($rss_sn);
         break;
 
-    /*---判斷動作請貼在上方---*/
+        /*---判斷動作請貼在上方---*/
 }
 
 /*-----------秀出結果區--------------*/

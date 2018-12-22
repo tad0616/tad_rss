@@ -14,7 +14,7 @@ function list_tad_rss($maxitems = 5)
 
     $result = $xoopsDB->query($sql) or web_error($sql);
 
-    $data = "";
+    $data = array();
     $i    = 0;
     while ($all = $xoopsDB->fetchArray($result)) {
         //以下會產生這些變數： $rss_sn , $title , $url , $enable
@@ -51,7 +51,7 @@ function get_rss_by_simplepie($rss_sn = "", $url = "", $maxitems = 5)
     $arr['web']['link']        = $feed->get_permalink();
     $arr['web']['description'] = $feed->get_description();
 
-    $content = "";
+    $content = array();
     $i       = 0;
     foreach ($feed->get_items(0, $maxitems) as $item) {
         $href        = $item->get_permalink();

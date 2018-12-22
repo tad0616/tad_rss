@@ -1,3 +1,10 @@
+Tad RSS 2.3.3 (2019-01-01 released)
+=========================================================
+  1. Support BootStrap4
+  2. Remove Big5 Chinese language
+  3. Support PHP 7.1
+
+
 Tad RSS 2.3.2 (2017-01-15 released)
 ================================================
  1.Fixed an issue where the block could not be used

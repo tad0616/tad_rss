@@ -17,7 +17,7 @@ function tad_rss_show($options = array("", 3, 170))
 
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, die($sql));
 
-    $rss_data = "";
+    $block = array();
 
     $n = 0;
     while ($all = $xoopsDB->fetchArray($result)) {
@@ -66,7 +66,7 @@ function tad_rss_show_edit($options)
                  \$i++;
                 }";
 
-        $chked  = (in_array($rss_sn, $sc)) ? "checked" : "";
+        $chked = (in_array($rss_sn, $sc)) ? "checked" : "";
         $chkbox .= "<input type='checkbox' id='c{$rss_sn}' value='{$rss_sn}'  onChange=bbv() $chked>$title";
     }
     $js .= "document.getElementById('bb').value=arr.join(',');
