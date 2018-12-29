@@ -57,7 +57,7 @@ function insert_tad_rss()
     $sql = "insert into " . $xoopsDB->prefix("tad_rss") . "
 	(`title` , `url` , `enable`)
 	values('{$title}' , '{$_POST['url']}' , '1')";
-    $xoopsDB->query($sql) or web_error($sql);
+    $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
 
     //取得最後新增資料的流水編號
     $rss_sn = $xoopsDB->getInsertId();
@@ -76,7 +76,7 @@ function list_tad_rss($rss_sn = 1)
     $bar     = $PageBar['bar'];
     $sql     = $PageBar['sql'];
 
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
 
     $all_data = array();
     $i        = 0;
@@ -108,7 +108,7 @@ function get_tad_rss($rss_sn = "")
     }
 
     $sql    = "select * from " . $xoopsDB->prefix("tad_rss") . " where rss_sn='$rss_sn'";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
     $data   = $xoopsDB->fetchArray($result);
     return $data;
 }
@@ -123,7 +123,7 @@ function update_tad_rss($rss_sn = "")
 	 `url` = '{$_POST['url']}' ,
 	 `enable` = '{$_POST['enable']}'
 	where rss_sn='$rss_sn'";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
     return $rss_sn;
 }
 
@@ -133,7 +133,7 @@ function change_enable($rss_sn, $enable = "1")
     global $xoopsDB, $xoopsUser;
 
     $sql = "update " . $xoopsDB->prefix("tad_rss") . " set `enable` = '{$enable}' where rss_sn='$rss_sn'";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
 }
 
 //刪除tad_rss某筆資料資料
@@ -141,7 +141,7 @@ function delete_tad_rss($rss_sn = "")
 {
     global $xoopsDB;
     $sql = "delete from " . $xoopsDB->prefix("tad_rss") . " where rss_sn='$rss_sn'";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
 }
 
 /*-----------執行動作判斷區----------*/
