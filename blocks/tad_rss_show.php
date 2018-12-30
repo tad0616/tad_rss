@@ -4,7 +4,8 @@ include_once XOOPS_ROOT_PATH . "/modules/tad_rss/function_block.php";
 //區塊主函式 (友站消息(tad_rss_show))
 function tad_rss_show($options = array("", 3, 170))
 {
-    global $xoopsDB;
+    global $xoopsDB, $xoTheme;
+    $xoTheme->addStylesheet('modules/tadtools/css/vertical_menu.css');
 
     $in = (empty($options[0])) ? "" : "and rss_sn in({$options[0]})";
 
