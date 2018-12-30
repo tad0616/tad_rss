@@ -62,9 +62,9 @@ function tad_rss_show_edit($options)
         }
 
         $js .= "if(document.getElementById('c{$rss_sn}').checked){
-               arr[\$i] = document.getElementById('c{$rss_sn}').value;
-                 \$i++;
-                }";
+            arr[\$i] = document.getElementById('c{$rss_sn}').value;
+                \$i++;
+            }";
 
         $chked = (in_array($rss_sn, $sc)) ? "checked" : "";
         $chkbox .= "<input type='checkbox' id='c{$rss_sn}' value='{$rss_sn}'  onChange=bbv() $chked>$title";
@@ -74,13 +74,21 @@ function tad_rss_show_edit($options)
     </script>";
 
     $form = "$js
-	" . _MB_TADRSS_TAD_RSS_SHOW_EDIT_BITEM0 . "{$chkbox}
-	<INPUT type='hidden' name='options[0]' id='bb' value='{$options[0]}'>
-	<br>
-	" . _MB_TADRSS_TAD_RSS_SHOW_EDIT_BITEM1 . "
-	<INPUT type='text' name='options[1]' value='{$options[1]}'>
-
-	";
+    <ol class='my-form'>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADRSS_TAD_RSS_SHOW_EDIT_BITEM0 . "</lable>
+            <div class='my-content'>
+                {$chkbox}
+	            <input type='hidden' name='options[0]' id='bb' value='{$options[0]}'>
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADRSS_TAD_RSS_SHOW_EDIT_BITEM1 . "</lable>
+            <div class='my-content'>
+	            <input type='text' name='options[1]' class='my-input' value='{$options[1]}'>
+            </div>
+        </li>
+    </ol>";
     return $form;
 }
 
