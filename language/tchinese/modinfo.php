@@ -12,7 +12,7 @@ define('_MI_TADRSS_SHOW_NUM', '每個網站秀出新聞數');
 define('_MI_TADRSS_SHOW_NUM_DESC', '設定每個網站新聞出現的數量');
 
 define('_MI_TADRSS_DIRNAME', basename(dirname(dirname(__DIR__))));
-define('_MI_TADRSS_HELP_HEADER', __DIR__ . '/help/helpheader.html');
+define('_MI_TADRSS_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_TADRSS_BACK_2_ADMIN', '管理');
 
 //help
