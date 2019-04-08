@@ -5794,11 +5794,11 @@ class SimplePie_Enclosure
 				}
 				elseif ($widescreen)
 				{
-					$width = round((intval($height)/9)*16);
+					$width = round(((int)$height / 9) * 16);
 				}
 				else
 				{
-					$width = round((intval($height)/3)*4);
+					$width = round(((int)$height / 3) * 4);
 				}
 			}
 			else
@@ -5828,11 +5828,11 @@ class SimplePie_Enclosure
 				}
 				elseif ($widescreen)
 				{
-					$height = round((intval($width)/16)*9);
+					$height = round(((int)$width / 16) * 9);
 				}
 				else
 				{
-					$height = round((intval($width)/4)*3);
+					$height = round(((int)$width / 4) * 3);
 				}
 			}
 			else
@@ -16999,7 +16999,7 @@ class SimplePie_Parser
 		{
 			libxml_clear_errors();
 			$xml = new XMLReader();
-			$xml->xml($data);
+			$xml->XML($data);
 			while (@$xml->read())
 			{
 				switch ($xml->nodeType)
@@ -17398,7 +17398,7 @@ class SimplePie_Decode_HTML_Entities
 					}
 					else
 					{
-						$codepoint = intval($codepoint);
+						$codepoint = (int)$codepoint;
 					}
 
 					if (isset($windows_1252_specials[$codepoint]))
