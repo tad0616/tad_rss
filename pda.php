@@ -12,9 +12,9 @@ function list_tad_rss($maxitems = 5)
 {
     global $xoopsDB, $xoopsModule, $xoopsModuleConfig, $xoopsTpl;
 
-    $sql = "select * from " . $xoopsDB->prefix("tad_rss") . " where enable='1'";
+    $sql = "SELECT * FROM " . $xoopsDB->prefix("tad_rss") . " WHERE enable='1'";
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     $data = "";
     //$i=0;
@@ -40,9 +40,7 @@ function list_tad_rss($maxitems = 5)
 //以 simplepie 來取得RSS
 function get_rss_by_simplepie($rss_sn = "", $url = "", $maxitems = 5)
 {
-
-    //require_once(XOOPS_ROOT_PATH.'/modules/tad_rss/class/simplepie/simplepie.inc');
-    require_once XOOPS_ROOT_PATH . '/modules/tad_rss/class/simplepie/SimplePie.compiled.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tad_rss/class/simplepie/SimplePie.php';
     $feed = new SimplePie();
     $feed->set_output_encoding(_CHARSET);
     $feed->set_feed_url($url);
@@ -95,11 +93,10 @@ function get_rss_cate_list()
     </li>
     <li data-icon='false'><a href='{$_SERVER['PHP_SELF']}'>All</a></li>";
 
-    $sql    = "select * from " . $xoopsDB->prefix("tad_rss") . " where enable='1'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $sql = "SELECT * FROM " . $xoopsDB->prefix("tad_rss") . " WHERE enable='1'";
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     while (list($rss_sn, $title, $url) = $xoopsDB->fetchRow($result)) {
-
         $list .= "<li data-icon='false'><a href='{$_SERVER['PHP_SELF']}?op=view&rss_sn={$rss_sn}'>{$title}</a></li>";
     }
     $list .= "</ul>";
@@ -133,9 +130,9 @@ function get_rss_data($rss_sn = "")
         return;
     }
 
-    $sql    = "select * from " . $xoopsDB->prefix("tad_rss") . " where rss_sn='$rss_sn'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
-    $data   = $xoopsDB->fetchArray($result);
+    $sql = "select * from " . $xoopsDB->prefix("tad_rss") . " where rss_sn='$rss_sn'";
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $data = $xoopsDB->fetchArray($result);
     return $data;
 }
 

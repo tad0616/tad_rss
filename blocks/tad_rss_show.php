@@ -4,7 +4,8 @@ include_once XOOPS_ROOT_PATH . "/modules/tad_rss/function_block.php";
 //區塊主函式 (友站消息(tad_rss_show))
 function tad_rss_show($options = array("", 3, 170))
 {
-    global $xoopsDB;
+    global $xoopsDB, $xoTheme;
+    $xoTheme->addStylesheet('modules/tadtools/css/vertical_menu.css');
 
     $in = (empty($options[0])) ? "" : "and rss_sn in({$options[0]})";
 
@@ -17,7 +18,7 @@ function tad_rss_show($options = array("", 3, 170))
 
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, die($sql));
 
-    $rss_data = "";
+    $block = array();
 
     $n = 0;
     while ($all = $xoopsDB->fetchArray($result)) {
@@ -32,11 +33,7 @@ function tad_rss_show($options = array("", 3, 170))
         $block['rss_data'][$n]['title']   = $title;
         $block['rss_data'][$n]['content'] = $rss;
         $n++;
-
     }
-    $block['bootstrap_version'] = $_SESSION['bootstrap'];
-    $block['row']               = $_SESSION['bootstrap'] == '3' ? 'row' : 'row-fluid';
-    $block['span']              = $_SESSION['bootstrap'] == '3' ? 'col-md-' : 'span';
     return $block;
 }
 
@@ -56,7 +53,7 @@ function tad_rss_show_edit($options)
 
     $chkbox = "";
 
-    $sql = "select * from " . $xoopsDB->prefix("tad_rss") . " where enable='1'";
+    $sql = "SELECT * FROM " . $xoopsDB->prefix("tad_rss") . " WHERE enable='1'";
 
     $result = $xoopsDB->query($sql);
     while ($all = $xoopsDB->fetchArray($result)) {
@@ -66,9 +63,9 @@ function tad_rss_show_edit($options)
         }
 
         $js .= "if(document.getElementById('c{$rss_sn}').checked){
-               arr[\$i] = document.getElementById('c{$rss_sn}').value;
-                 \$i++;
-                }";
+            arr[\$i] = document.getElementById('c{$rss_sn}').value;
+                \$i++;
+            }";
 
         $chked = (in_array($rss_sn, $sc)) ? "checked" : "";
         $chkbox .= "<input type='checkbox' id='c{$rss_sn}' value='{$rss_sn}'  onChange=bbv() $chked>$title";
@@ -78,21 +75,28 @@ function tad_rss_show_edit($options)
     </script>";
 
     $form = "$js
-	" . _MB_TADRSS_TAD_RSS_SHOW_EDIT_BITEM0 . "{$chkbox}
-	<INPUT type='hidden' name='options[0]' id='bb' value='{$options[0]}'>
-	<br>
-	" . _MB_TADRSS_TAD_RSS_SHOW_EDIT_BITEM1 . "
-	<INPUT type='text' name='options[1]' value='{$options[1]}'>
-
-	";
+    <ol class='my-form'>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADRSS_TAD_RSS_SHOW_EDIT_BITEM0 . "</lable>
+            <div class='my-content'>
+                {$chkbox}
+	            <input type='hidden' name='options[0]' id='bb' value='{$options[0]}'>
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADRSS_TAD_RSS_SHOW_EDIT_BITEM1 . "</lable>
+            <div class='my-content'>
+	            <input type='text' name='options[1]' class='my-input' value='{$options[1]}'>
+            </div>
+        </li>
+    </ol>";
     return $form;
 }
 
 //以 simplepie 來取得RSS
 function get_rss_by_simplepie_block($url = "", $maxitems = 5)
 {
-
-    require_once XOOPS_ROOT_PATH . '/modules/tad_rss/class/simplepie/SimplePie.compiled.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tad_rss/class/simplepie/SimplePie.php';
     $feed = new SimplePie();
     $feed->set_output_encoding(_CHARSET);
     $feed->set_feed_url($url);
