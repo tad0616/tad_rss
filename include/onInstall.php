@@ -1,15 +1,15 @@
 <?php
 function xoops_module_install_tad_rss(&$module)
 {
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/magpierss_cache");
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/simplepie_cache");
-    mk_dir(XOOPS_ROOT_PATH . '/uploads/tad_rss');
-    mk_dir(XOOPS_ROOT_PATH . '/uploads/tad_rss/thumbs');
+    tad_rss_mk_dir(XOOPS_ROOT_PATH . "/uploads/magpierss_cache");
+    tad_rss_mk_dir(XOOPS_ROOT_PATH . "/uploads/simplepie_cache");
+    tad_rss_mk_dir(XOOPS_ROOT_PATH . '/uploads/tad_rss');
+    tad_rss_mk_dir(XOOPS_ROOT_PATH . '/uploads/tad_rss/thumbs');
     return true;
 }
 
 //建立目錄
-function mk_dir($dir = "")
+function tad_rss_mk_dir($dir = "")
 {
     //若無目錄名稱秀出警告訊息
     if (empty($dir)) {
