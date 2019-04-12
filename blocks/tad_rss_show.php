@@ -2,7 +2,7 @@
 include_once XOOPS_ROOT_PATH . "/modules/tad_rss/function_block.php";
 
 //區塊主函式 (友站消息(tad_rss_show))
-function tad_rss_show($options = array("", 3, 170))
+function tad_rss_show($options = ["", 3, 170])
 {
     global $xoopsDB, $xoTheme;
     $xoTheme->addStylesheet('modules/tadtools/css/vertical_menu.css');
@@ -18,7 +18,7 @@ function tad_rss_show($options = array("", 3, 170))
 
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, die($sql));
 
-    $block = array();
+    $block = [];
 
     $n = 0;
     while ($all = $xoopsDB->fetchArray($result)) {

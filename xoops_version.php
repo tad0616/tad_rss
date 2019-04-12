@@ -1,5 +1,5 @@
 <?php
-$modversion = array();
+$modversion = [];
 
 //---模組基本資訊---//
 $modversion['name']        = _MI_TADRSS_NAME;
@@ -24,7 +24,7 @@ $modversion['min_php']             = 5.3;
 $modversion['min_xoops']           = '2.5';
 
 //---paypal資訊---//
-$modversion['paypal']                  = array();
+$modversion['paypal']                  = [];
 $modversion['paypal']['business']      = 'tad0616@gmail.com';
 $modversion['paypal']['item_name']     = 'Donation : ' . _MI_TAD_WEB;
 $modversion['paypal']['amount']        = 0;
@@ -49,7 +49,7 @@ $modversion['onInstall'] = "include/onInstall.php";
 $modversion['onUpdate']  = "include/onUpdate.php";
 
 //---樣板設定---//
-$modversion['templates']                    = array();
+$modversion['templates']                    = [];
 $i                                          = 1;
 $modversion['templates'][$i]['file']        = 'tad_rss_index.tpl';
 $modversion['templates'][$i]['description'] = 'tad_rss_index.tpl';

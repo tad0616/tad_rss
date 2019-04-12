@@ -14,7 +14,7 @@ function tad_rss_form($rss_sn = "")
     if (!empty($rss_sn)) {
         $DBV = get_tad_rss($rss_sn);
     } else {
-        $DBV = array();
+        $DBV = [];
     }
 
     //預設值設定
@@ -78,7 +78,7 @@ function list_tad_rss($rss_sn = 1)
 
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
-    $all_data = array();
+    $all_data = [];
     $i        = 0;
     while ($all = $xoopsDB->fetchArray($result)) {
         //以下會產生這些變數： $rss_sn , $title , $url , $enable
