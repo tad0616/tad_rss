@@ -14,6 +14,3 @@ function xoops_module_update_tad_rss(&$module, $old_version)
 
     return true;
 }
-
-
-
