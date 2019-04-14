@@ -1,5 +1,5 @@
 <?php
-include_once XOOPS_ROOT_PATH . '/modules/tad_rss/function_block.php';
+require_once XOOPS_ROOT_PATH . '/modules/tad_rss/function_block.php';
 
 //區塊主函式 (友站消息(tad_rss_show))
 function tad_rss_show($options = ['', 3, 170])
@@ -9,10 +9,10 @@ function tad_rss_show($options = ['', 3, 170])
 
     $in = (empty($options[0])) ? '' : "and rss_sn in({$options[0]})";
 
-    $modhandler = xoops_getHandler('module');
-    $xoopsModule = $modhandler->getByDirname('tad_rss');
-    $config_handler = xoops_getHandler('config');
-    $xoopsModuleConfig = $config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
+    $moduleHandler = xoops_getHandler('module');
+    $xoopsModule = $moduleHandler->getByDirname('tad_rss');
+    $configHandler = xoops_getHandler('config');
+    $xoopsModuleConfig = $configHandler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
 
     $sql = 'select * from ' . $xoopsDB->prefix('tad_rss') . " where enable='1' $in";
 
@@ -21,7 +21,7 @@ function tad_rss_show($options = ['', 3, 170])
     $block = [];
 
     $n = 0;
-    while ($all = $xoopsDB->fetchArray($result)) {
+    while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： $rss_sn , $title , $url , $enable
         foreach ($all as $k => $v) {
             $$k = $v;
@@ -56,7 +56,7 @@ function tad_rss_show_edit($options)
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_rss') . " WHERE enable='1'";
 
     $result = $xoopsDB->query($sql);
-    while ($all = $xoopsDB->fetchArray($result)) {
+    while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： $rss_sn , $title , $url , $enable
         foreach ($all as $k => $v) {
             $$k = $v;

@@ -18,11 +18,11 @@ function delete_tad_rss_func(rss_sn){
             </div>
             <div class="col-sm-4">
               <label class="radio-inline">
-                <input type="radio" name="enable" id="enable" value="1" <{if $enable != "0"}>checked="checked"<{/if}>><{$smarty.const._TAD_ENABLE}>
+                <input type="radio" name="enable" id="enable" value="1" <{if $enable != "0"}>checked<{/if}>><{$smarty.const._TAD_ENABLE}>
               </label>
 
               <label class="radio-inline">
-                <input type="radio" name="enable" id="enable" value="0" <{if $enable == "0"}>checked="checked"<{/if}>><{$smarty.const._TAD_UNABLE}>
+                <input type="radio" name="enable" id="enable" value="0" <{if $enable == "0"}>checked<{/if}>><{$smarty.const._TAD_UNABLE}>
               </label>
             </div>
           </div>

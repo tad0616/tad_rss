@@ -18,11 +18,11 @@ function delete_tad_rss_func(rss_sn){
             </div>
             <div class="col-md-4">
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="enable" id="enable_1" value="1" <{if $enable != "0"}>checked="checked"<{/if}>>
+                <input class="form-check-input" type="radio" name="enable" id="enable_1" value="1" <{if $enable != "0"}>checked<{/if}>>
                 <label class="form-check-label" for="enable_1"><{$smarty.const._YES}></label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="enable" id="enable_0" value="0" <{if $enable == "0"}>checked="checked"<{/if}>>
+                <input class="form-check-input" type="radio" name="enable" id="enable_0" value="0" <{if $enable == "0"}>checked<{/if}>>
                 <label class="form-check-label" for="enable_0"><{$smarty.const._NO}></label>
               </div>
             </div>
