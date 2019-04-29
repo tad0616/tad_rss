@@ -1300,13 +1300,13 @@ class SimplePie
 
         // RFC 3023 (only applies to sniffed content)
         if (isset($sniffed)) {
-            if (in_array($sniffed, $application_types, true) || 'application/' === mb_substr($sniffed, 0, 12) && '+xml' === mb_substr($sniffed, -4)) {
+            if (in_array($sniffed, $application_types) || 'application/' === mb_substr($sniffed, 0, 12) && '+xml' === mb_substr($sniffed, -4)) {
                 if (isset($headers['content-type']) && preg_match('/;\x20?charset=([^;]*)/i', $headers['content-type'], $charset)) {
                     $encodings[] = mb_strtoupper($charset[1]);
                 }
                 $encodings = array_merge($encodings, $this->registry->call('Misc', 'xml_encoding', [$this->raw_data, &$this->registry]));
                 $encodings[] = 'UTF-8';
-            } elseif (in_array($sniffed, $text_types, true) || 'text/' === mb_substr($sniffed, 0, 5) && '+xml' === mb_substr($sniffed, -4)) {
+            } elseif (in_array($sniffed, $text_types) || 'text/' === mb_substr($sniffed, 0, 5) && '+xml' === mb_substr($sniffed, -4)) {
                 if (isset($headers['content-type']) && preg_match('/;\x20?charset=([^;]*)/i', $headers['content-type'], $charset)) {
                     $encodings[] = $charset[1];
                 }
@@ -3032,7 +3032,7 @@ class SimplePie_Registry
     {
         $class = $this->get_class($type);
 
-        if (in_array($class, $this->legacy, true)) {
+        if (in_array($class, $this->legacy)) {
             switch ($type) {
                 case 'locator':
                     // Legacy: file, timeout, useragent, file_class, max_checked_feeds, content_type_sniffer_class
@@ -3069,7 +3069,7 @@ class SimplePie_Registry
     {
         $class = $this->get_class($type);
 
-        if (in_array($class, $this->legacy, true)) {
+        if (in_array($class, $this->legacy)) {
             switch ($type) {
                 case 'Cache':
                     // For backwards compatibility with old non-static
@@ -3581,14 +3581,14 @@ class SimplePie_Cache_MySQL extends SimplePie_Cache_DB
             $db[] = $row;
         }
 
-        if (!in_array($this->options['extras']['prefix'] . 'cache_data', $db, true)) {
+        if (!in_array($this->options['extras']['prefix'] . 'cache_data', $db)) {
             $query = $this->mysql->exec('CREATE TABLE `' . $this->options['extras']['prefix'] . 'cache_data` (`id` TEXT CHARACTER SET utf8 NOT NULL, `items` SMALLINT NOT NULL DEFAULT 0, `data` BLOB NOT NULL, `mtime` INT UNSIGNED NOT NULL, UNIQUE (`id`(125)))');
             if (false === $query) {
                 $this->mysql = null;
             }
         }
 
-        if (!in_array($this->options['extras']['prefix'] . 'items', $db, true)) {
+        if (!in_array($this->options['extras']['prefix'] . 'items', $db)) {
             $query = $this->mysql->exec('CREATE TABLE `' . $this->options['extras']['prefix'] . 'items` (`feed_id` TEXT CHARACTER SET utf8 NOT NULL, `id` TEXT CHARACTER SET utf8 NOT NULL, `data` TEXT CHARACTER SET utf8 NOT NULL, `posted` INT UNSIGNED NOT NULL, INDEX `feed_id` (`feed_id`(125)))');
             if (false === $query) {
                 $this->mysql = null;
@@ -4142,7 +4142,7 @@ class SimplePie_Sanitize
             $attributes = [$attributes];
         }
 
-        if (!is_array($this->strip_htmltags) || !in_array($tag, $this->strip_htmltags, true)) {
+        if (!is_array($this->strip_htmltags) || !in_array($tag, $this->strip_htmltags)) {
             $elements = $document->getElementsByTagName($tag);
             foreach ($elements as $element) {
                 foreach ($attributes as $attribute) {
@@ -4160,7 +4160,7 @@ class SimplePie_Sanitize
     public function do_strip_htmltags($match)
     {
         if ($this->encode_instead_of_strip) {
-            if (isset($match[4]) && !in_array(mb_strtolower($match[1]), ['script', 'style'], true)) {
+            if (isset($match[4]) && !in_array(mb_strtolower($match[1]), ['script', 'style'])) {
                 $match[1] = htmlspecialchars($match[1], ENT_COMPAT, 'UTF-8');
                 $match[2] = htmlspecialchars($match[2], ENT_COMPAT, 'UTF-8');
 
@@ -4168,7 +4168,7 @@ class SimplePie_Sanitize
             }
 
             return htmlspecialchars($match[0], ENT_COMPAT, 'UTF-8');
-        } elseif (isset($match[4]) && !in_array(mb_strtolower($match[1]), ['script', 'style'], true)) {
+        } elseif (isset($match[4]) && !in_array(mb_strtolower($match[1]), ['script', 'style'])) {
             return $match[4];
         }
 
@@ -4184,7 +4184,7 @@ class SimplePie_Sanitize
                 $fragment = $document->createDocumentFragment();
 
                 // For elements which aren't script or style, include the tag itself
-                if (!in_array($tag, ['script', 'style'], true)) {
+                if (!in_array($tag, ['script', 'style'])) {
                     $text = '<' . $tag;
                     if ($element->hasAttributes()) {
                         $attrs = [];
@@ -4216,7 +4216,7 @@ class SimplePie_Sanitize
                     $fragment->appendChild($child);
                 }
 
-                if (!in_array($tag, ['script', 'style'], true)) {
+                if (!in_array($tag, ['script', 'style'])) {
                     $fragment->appendChild(new DOMText('</' . $tag . '>'));
                 }
 
@@ -4224,7 +4224,7 @@ class SimplePie_Sanitize
             }
 
             return;
-        } elseif (in_array($tag, ['script', 'style'], true)) {
+        } elseif (in_array($tag, ['script', 'style'])) {
             foreach ($elements as $element) {
                 $element->parentNode->removeChild($element);
             }
@@ -5291,7 +5291,7 @@ class SimplePie_Enclosure
         }
 
         // If we encounter an unsupported mime-type, check the file extension and guess intelligently.
-        if (!in_array($type, array_merge($types_flash, $types_fmedia, $types_quicktime, $types_wmedia, $types_mp3), true)) {
+        if (!in_array($type, array_merge($types_flash, $types_fmedia, $types_quicktime, $types_wmedia, $types_mp3))) {
             switch (mb_strtolower($this->get_extension())) {
                 // Audio mime-types
                 case 'aac':
@@ -5391,15 +5391,15 @@ class SimplePie_Enclosure
         }
 
         if ($find_handler) {
-            if (in_array($type, $types_flash, true)) {
+            if (in_array($type, $types_flash)) {
                 return 'flash';
-            } elseif (in_array($type, $types_fmedia, true)) {
+            } elseif (in_array($type, $types_fmedia)) {
                 return 'fmedia';
-            } elseif (in_array($type, $types_quicktime, true)) {
+            } elseif (in_array($type, $types_quicktime)) {
                 return 'quicktime';
-            } elseif (in_array($type, $types_wmedia, true)) {
+            } elseif (in_array($type, $types_wmedia)) {
                 return 'wmedia';
-            } elseif (in_array($type, $types_mp3, true)) {
+            } elseif (in_array($type, $types_mp3)) {
                 return 'mp3';
             }
 
@@ -5766,7 +5766,7 @@ class SimplePie_File
                         $this->headers = $parser->headers;
                         $this->body = $parser->body;
                         $this->status_code = $parser->status_code;
-                        if ((in_array($this->status_code, [300, 301, 302, 303, 307], true) || $this->status_code > 307 && $this->status_code < 400) && isset($this->headers['location']) && $this->redirects < $redirects) {
+                        if ((in_array($this->status_code, [300, 301, 302, 303, 307]) || $this->status_code > 307 && $this->status_code < 400) && isset($this->headers['location']) && $this->redirects < $redirects) {
                             $this->redirects++;
                             $location = SimplePie_Misc::absolutize_url($this->headers['location'], $url);
 
@@ -5829,7 +5829,7 @@ class SimplePie_File
                             $this->headers = $parser->headers;
                             $this->body = $parser->body;
                             $this->status_code = $parser->status_code;
-                            if ((in_array($this->status_code, [300, 301, 302, 303, 307], true) || $this->status_code > 307 && $this->status_code < 400) && isset($this->headers['location']) && $this->redirects < $redirects) {
+                            if ((in_array($this->status_code, [300, 301, 302, 303, 307]) || $this->status_code > 307 && $this->status_code < 400) && isset($this->headers['location']) && $this->redirects < $redirects) {
                                 $this->redirects++;
                                 $location = SimplePie_Misc::absolutize_url($this->headers['location'], $url);
 
@@ -8873,7 +8873,7 @@ class SimplePie_Locator
         if ($file->method & SIMPLEPIE_FILE_SOURCE_REMOTE) {
             $sniffer = $this->registry->create('Content_Type_Sniffer', [$file]);
             $sniffed = $sniffer->get_type();
-            if (in_array($sniffed, ['application/rss+xml', 'application/rdf+xml', 'text/rdf', 'application/atom+xml', 'text/xml', 'application/xml'], true)) {
+            if (in_array($sniffed, ['application/rss+xml', 'application/rdf+xml', 'text/rdf', 'application/atom+xml', 'text/xml', 'application/xml'])) {
                 return true;
             }
 
@@ -8945,7 +8945,7 @@ class SimplePie_Locator
                     continue;
                 }
 
-                if (!in_array($href, $done, true) && in_array('feed', $rel, true) || (in_array('alternate', $rel, true) && !in_array('stylesheet', $rel, true) && $link->hasAttribute('type') && in_array(mb_strtolower($this->registry->call('Misc', 'parse_mime', [$link->getAttribute('type')])), ['application/rss+xml', 'application/atom+xml'], true)) && !isset($feeds[$href])) {
+                if (!in_array($href, $done) && in_array('feed', $rel) || (in_array('alternate', $rel) && !in_array('stylesheet', $rel) && $link->hasAttribute('type') && in_array(mb_strtolower($this->registry->call('Misc', 'parse_mime', [$link->getAttribute('type')])), ['application/rss+xml', 'application/atom+xml'])) && !isset($feeds[$href])) {
                     $this->checked_feeds++;
                     $headers = [
                         'Accept' => 'application/atom+xml, application/rss+xml, application/rdf+xml;q=0.9, application/xml;q=0.8, text/xml;q=0.8, text/html;q=0.7, unknown/unknown;q=0.1, application/unknown;q=0.1, */*;q=0.1',
@@ -9008,7 +9008,7 @@ class SimplePie_Locator
             if ($this->checked_feeds === $this->max_checked_feeds) {
                 break;
             }
-            if (in_array(mb_strtolower(mb_strrchr($value, '.')), ['.rss', '.rdf', '.atom', '.xml'], true)) {
+            if (in_array(mb_strtolower(mb_strrchr($value, '.')), ['.rss', '.rdf', '.atom', '.xml'])) {
                 $this->checked_feeds++;
 
                 $headers = [
@@ -12835,7 +12835,7 @@ class SimplePie_Misc
         if ("\x00\x80" === @mb_convert_encoding("\x80", 'UTF-16BE', $input)) {
             return false;
         }
-        if (!in_array($input, mb_list_encodings(), true)) {
+        if (!in_array($input, mb_list_encodings())) {
             return false;
         }
 
@@ -14097,7 +14097,7 @@ class SimplePie_Misc
                 case 'xhtml':
                     return SIMPLEPIE_CONSTRUCT_XHTML;
             }
-            if (in_array(mb_substr($type, -4), ['+xml', '/xml'], true) || 'text/' === mb_substr($type, 0, 5)) {
+            if (in_array(mb_substr($type, -4), ['+xml', '/xml']) || 'text/' === mb_substr($type, 0, 5)) {
                 return SIMPLEPIE_CONSTRUCT_NONE;
             }
 
@@ -14613,11 +14613,11 @@ class SimplePie_Parser
             $this->datas[] = &$this->data;
             $this->data = &$this->data['child'][end($this->namespace)][end($this->element)][];
             $this->data = ['data' => '', 'attribs' => $attribs, 'xml_base' => end($this->xml_base), 'xml_base_explicit' => end($this->xml_base_explicit), 'xml_lang' => end($this->xml_lang)];
-            if ((SIMPLEPIE_NAMESPACE_ATOM_03 === end($this->namespace) && in_array(end($this->element), ['title', 'tagline', 'copyright', 'info', 'summary', 'content'], true) && isset($attribs['']['mode']) && 'xml' === $attribs['']['mode'])
-            || (SIMPLEPIE_NAMESPACE_ATOM_10 === end($this->namespace) && in_array(end($this->element), ['rights', 'subtitle', 'summary', 'info', 'title', 'content'], true) && isset($attribs['']['type']) && 'xhtml' === $attribs['']['type'])
-            || (SIMPLEPIE_NAMESPACE_RSS_20 === end($this->namespace) && in_array(end($this->element), ['title'], true))
-            || (SIMPLEPIE_NAMESPACE_RSS_090 === end($this->namespace) && in_array(end($this->element), ['title'], true))
-            || (SIMPLEPIE_NAMESPACE_RSS_10 === end($this->namespace) && in_array(end($this->element), ['title'], true))) {
+            if ((SIMPLEPIE_NAMESPACE_ATOM_03 === end($this->namespace) && in_array(end($this->element), ['title', 'tagline', 'copyright', 'info', 'summary', 'content']) && isset($attribs['']['mode']) && 'xml' === $attribs['']['mode'])
+            || (SIMPLEPIE_NAMESPACE_ATOM_10 === end($this->namespace) && in_array(end($this->element), ['rights', 'subtitle', 'summary', 'info', 'title', 'content']) && isset($attribs['']['type']) && 'xhtml' === $attribs['']['type'])
+            || (SIMPLEPIE_NAMESPACE_RSS_20 === end($this->namespace) && in_array(end($this->element), ['title']))
+            || (SIMPLEPIE_NAMESPACE_RSS_090 === end($this->namespace) && in_array(end($this->element), ['title']))
+            || (SIMPLEPIE_NAMESPACE_RSS_10 === end($this->namespace) && in_array(end($this->element), ['title']))) {
                 $this->current_xhtml_construct = 0;
             }
         }
@@ -14636,7 +14636,7 @@ class SimplePie_Parser
     {
         if ($this->current_xhtml_construct >= 0) {
             $this->current_xhtml_construct--;
-            if (SIMPLEPIE_NAMESPACE_XHTML === end($this->namespace) && !in_array(end($this->element), ['area', 'base', 'basefont', 'br', 'col', 'frame', 'hr', 'img', 'input', 'isindex', 'link', 'meta', 'param'], true)) {
+            if (SIMPLEPIE_NAMESPACE_XHTML === end($this->namespace) && !in_array(end($this->element), ['area', 'base', 'basefont', 'br', 'col', 'frame', 'hr', 'img', 'input', 'isindex', 'link', 'meta', 'param'])) {
                 $this->data['data'] .= '</' . end($this->element) . '>';
             }
         }
@@ -14842,7 +14842,7 @@ class SimplePie_Decode_HTML_Entities
                         $replacement = SimplePie_Misc::codepoint_to_utf8($codepoint);
                     }
 
-                    if (!in_array($this->consume(), [';', false], true)) {
+                    if (!in_array($this->consume(), [';', false])) {
                         $this->unconsume();
                     }
 
