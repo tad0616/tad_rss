@@ -1,6 +1,5 @@
 <?php
-include_once XOOPS_ROOT_PATH . '/modules/tadtools/language/' . $xoopsConfig['language'] . '/modinfo_common.php';
-
+xoops_loadLanguage('modinfo_common', 'tadtools');
 define('_MI_TADRSS_NAME', '友站消息');
 define('_MI_TADRSS_AUTHOR', 'Tad (tad0616@gmail.com)');
 define('_MI_TADRSS_CREDITS', 'Michael Beck');

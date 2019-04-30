@@ -1,4 +1,5 @@
 <?php
+use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 $xoopsOption['template_main'] = 'tad_rss_adm_main.tpl';
 include_once 'header.php';
@@ -57,7 +58,7 @@ function insert_tad_rss()
     $sql = 'insert into ' . $xoopsDB->prefix('tad_rss') . "
 	(`title` , `url` , `enable`)
 	values('{$title}' , '{$_POST['url']}' , '1')";
-    $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     //取得最後新增資料的流水編號
     $rss_sn = $xoopsDB->getInsertId();
@@ -72,12 +73,12 @@ function list_tad_rss($rss_sn = 1)
 
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_rss') . '';
 
-    //getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
-    $PageBar = getPageBar($sql, 20, 10);
+    //Utility::getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
+    $PageBar = Utility::getPageBar($sql, 20, 10);
     $bar = $PageBar['bar'];
     $sql = $PageBar['sql'];
 
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $all_data = [];
     $i = 0;
@@ -109,7 +110,7 @@ function get_tad_rss($rss_sn = '')
     }
 
     $sql = 'select * from ' . $xoopsDB->prefix('tad_rss') . " where rss_sn='$rss_sn'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $data = $xoopsDB->fetchArray($result);
 
     return $data;
@@ -125,7 +126,7 @@ function update_tad_rss($rss_sn = '')
 	 `url` = '{$_POST['url']}' ,
 	 `enable` = '{$_POST['enable']}'
 	where rss_sn='$rss_sn'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     return $rss_sn;
 }
@@ -136,7 +137,7 @@ function change_enable($rss_sn, $enable = '1')
     global $xoopsDB, $xoopsUser;
 
     $sql = 'update ' . $xoopsDB->prefix('tad_rss') . " set `enable` = '{$enable}' where rss_sn='$rss_sn'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 
 //刪除tad_rss某筆資料資料
@@ -144,7 +145,7 @@ function delete_tad_rss($rss_sn = '')
 {
     global $xoopsDB;
     $sql = 'delete from ' . $xoopsDB->prefix('tad_rss') . " where rss_sn='$rss_sn'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 
 /*-----------執行動作判斷區----------*/

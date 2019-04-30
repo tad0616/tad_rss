@@ -1,6 +1,6 @@
 <?php
 
-use XoopsModules\Tad_rss\Utility;
+use XoopsModules\Tadtools\Utility;
 
 include dirname(__DIR__) . '/preloads/autoloader.php';
 
