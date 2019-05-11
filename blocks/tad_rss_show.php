@@ -1,4 +1,5 @@
 <?php
+
 require_once XOOPS_ROOT_PATH . '/modules/tad_rss/function_block.php';
 
 //區塊主函式 (友站消息(tad_rss_show))
@@ -98,7 +99,7 @@ function tad_rss_show_edit($options)
 function get_rss_by_simplepie_block($url = '', $maxitems = 5)
 {
     require_once XOOPS_ROOT_PATH . '/modules/tad_rss/class/simplepie/SimplePie.php';
-    $feed = new SimplePie();
+    $feed =new SimplePie();
     $feed->set_output_encoding(_CHARSET);
     $feed->set_feed_url($url);
     $feed->set_cache_location(XOOPS_ROOT_PATH . '/uploads/simplepie_cache');

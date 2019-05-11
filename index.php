@@ -1,4 +1,5 @@
 <?php
+
 /*-----------引入檔案區--------------*/
 require __DIR__ . '/header.php';
 $GLOBALS['xoopsOption']['template_main'] = 'tad_rss_index.tpl';

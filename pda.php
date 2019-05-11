@@ -1,4 +1,5 @@
 <?php
+
 if (file_exists('mainfile.php')) {
     require_once __DIR__ . '/mainfile.php';
 } elseif ('../../mainfile.php') {
@@ -96,7 +97,7 @@ function get_rss_cate_list()
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_rss') . " WHERE enable='1'";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
-    while (false !== (list($rss_sn, $title, $url) = $xoopsDB->fetchRow($result))) {
+    while (list($rss_sn, $title, $url) = $xoopsDB->fetchRow($result)) {
         $list .= "<li data-icon='false'><a href='{$_SERVER['PHP_SELF']}?op=view&rss_sn={$rss_sn}'>{$title}</a></li>";
     }
     $list .= '</ul>';
