@@ -17,7 +17,7 @@ function tad_rss_show($options = ['', 3, 170])
 
     $sql = 'select * from ' . $xoopsDB->prefix('tad_rss') . " where enable='1' $in";
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, die($sql));
+    $result = $xoopsDB->query($sql);
 
     $block = [];
 

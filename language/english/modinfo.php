@@ -1,6 +1,5 @@
 <?php
 xoops_loadLanguage('modinfo_common', 'tadtools');
-
 define('_MI_TADRSS_NAME', 'Tad RSS News');
 define('_MI_TADRSS_AUTHOR', 'Tad (tad0616@gmail.com)');
 define('_MI_TADRSS_CREDITS', 'Tad');

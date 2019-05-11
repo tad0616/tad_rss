@@ -1,8 +1,8 @@
 <?php
-
+use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 require __DIR__ . '/header.php';
-$GLOBALS['xoopsOption']['template_main'] = 'tad_rss_index.tpl';
+$xoopsOption['template_main'] = 'tad_rss_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 /*-----------function區--------------*/
 
@@ -13,7 +13,7 @@ function list_tad_rss($maxitems = 5)
 
     $sql = 'select * from ' . $xoopsDB->prefix('tad_rss') . " where enable='1'";
 
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $data = [];
     $i = 0;
@@ -77,9 +77,9 @@ function get_rss_by_simplepie($rss_sn = '', $url = '', $maxitems = 5)
 require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 
-$xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 $xoopsTpl->assign('isAdmin', $isAdmin);
-$xoopsTpl->assign('jquery', get_jquery(true));
+$xoopsTpl->assign('jquery', Utility::get_jquery(true));
 
 switch ($op) {
     default:

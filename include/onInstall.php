@@ -1,8 +1,10 @@
 <?php
 
-use XoopsModules\Tad_rss\Utility;
+use XoopsModules\Tadtools\Utility;
+if (!class_exists('XoopsModules\Tadtools\Utility')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
 
-include dirname(__DIR__) . '/preloads/autoloader.php';
 
 function xoops_module_install_tad_rss(&$module)
 {

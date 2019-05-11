@@ -1,8 +1,9 @@
 <?php
+use XoopsModules\Tadtools\Utility;
 
-if (file_exists('mainfile.php')) {
+if (file_exists(__DIR__ . '/mainfile.php')) {
     require_once __DIR__ . '/mainfile.php';
-} elseif ('../../mainfile.php') {
+} elseif (dirname(dirname(__DIR__)) . '/mainfile.php') {
     require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 }
 
@@ -15,7 +16,7 @@ function list_tad_rss($maxitems = 5)
 
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_rss') . " WHERE enable='1'";
 
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $data = '';
     //$i=0;
@@ -95,7 +96,7 @@ function get_rss_cate_list()
     <li data-icon='false'><a href='{$_SERVER['PHP_SELF']}'>All</a></li>";
 
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_rss') . " WHERE enable='1'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while (list($rss_sn, $title, $url) = $xoopsDB->fetchRow($result)) {
         $list .= "<li data-icon='false'><a href='{$_SERVER['PHP_SELF']}?op=view&rss_sn={$rss_sn}'>{$title}</a></li>";
@@ -133,7 +134,7 @@ function get_rss_data($rss_sn = '')
     }
 
     $sql = 'select * from ' . $xoopsDB->prefix('tad_rss') . " where rss_sn='$rss_sn'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $data = $xoopsDB->fetchArray($result);
 
     return $data;

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * SimplePie
  *
@@ -564,10 +563,10 @@ class SimplePie
 
     /**
      * @var string Web-accessible path to the handler_image.php file.
-     * @see SimplePie::set_imageHandler()
+     * @see SimplePie::set_image_handler()
      * @access private
      */
-    public $imageHandler = '';
+    public $image_handler = '';
 
     /**
      * @var array Stores the URLs when multiple feeds are being initialized.
@@ -1080,7 +1079,7 @@ class SimplePie
             $this->strip_comments(false);
             $this->strip_htmltags(false);
             $this->strip_attributes(false);
-            $this->set_imageHandler(false);
+            $this->set_image_handler(false);
         }
     }
 
@@ -1177,12 +1176,12 @@ class SimplePie
      * @param string $page Web-accessible path to the handler_image.php file.
      * @param string $qs The query string that the value should be passed to.
      */
-    public function set_imageHandler($page = false, $qs = 'i')
+    public function set_image_handler($page = false, $qs = 'i')
     {
         if (false !== $page) {
-            $this->sanitize->set_imageHandler($page . '?' . $qs . '=');
+            $this->sanitize->set_image_handler($page . '?' . $qs . '=');
         } else {
-            $this->imageHandler = '';
+            $this->image_handler = '';
         }
     }
 
@@ -1275,7 +1274,7 @@ class SimplePie
 
             // Decide whether to enable caching
             if ($this->cache && '' !== $parsed_feed_url['scheme']) {
-                $cache = $this->registry->call('Cache', 'getHandler', [$this->cache_location, call_user_func($this->cache_name_function, $this->feed_url), 'spc']);
+                $cache = $this->registry->call('Cache', 'get_handler', [$this->cache_location, call_user_func($this->cache_name_function, $this->feed_url), 'spc']);
             }
 
             // Fetch the data via SimplePie_File into $this->raw_data
@@ -1495,7 +1494,7 @@ class SimplePie
                     if (!$cache->save($this)) {
                         trigger_error("$this->cache_location is not writeable. Make sure you've set the correct relative or absolute path, and that the location is server-writable.", E_USER_WARNING);
                     }
-                    $cache = $this->registry->call('Cache', 'getHandler', [$this->cache_location, call_user_func($this->cache_name_function, $file->url), 'spc']);
+                    $cache = $this->registry->call('Cache', 'get_handler', [$this->cache_location, call_user_func($this->cache_name_function, $file->url), 'spc']);
                 }
                 $this->feed_url = $file->url;
             }
@@ -2621,7 +2620,7 @@ class SimplePie
      * @param mixed $page
      * @param mixed $qs
      */
-    public function set_faviconHandler($page = false, $qs = 'i')
+    public function set_favicon_handler($page = false, $qs = 'i')
     {
         $level = defined('E_USER_DEPRECATED') ? E_USER_DEPRECATED : E_USER_WARNING;
         trigger_error('Favicon handling has been removed, please use your own handling', $level);
@@ -2859,7 +2858,7 @@ class SimplePie_Cache
      * @param string $extension 'spi' or 'spc'
      * @return SimplePie_Cache_Base Type of object depends on scheme of `$location`
      */
-    public static function getHandler($location, $filename, $extension)
+    public static function get_handler($location, $filename, $extension)
     {
         $type = explode(':', $location, 2);
         $type = $type[0];
@@ -2875,16 +2874,16 @@ class SimplePie_Cache
     /**
      * Create a new SimplePie_Cache object
      *
-     * @deprecated Use {@see getHandler} instead
+     * @deprecated Use {@see get_handler} instead
      * @param mixed $location
      * @param mixed $filename
      * @param mixed $extension
      */
     public function create($location, $filename, $extension)
     {
-        trigger_error('Cache::create() has been replaced with Cache::getHandler(). Switch to the registry system to use this.', E_USER_DEPRECATED);
+        trigger_error('Cache::create() has been replaced with Cache::get_handler(). Switch to the registry system to use this.', E_USER_DEPRECATED);
 
-        return self::getHandler($location, $filename, $extension);
+        return self::get_handler($location, $filename, $extension);
     }
 
     /**
@@ -3075,7 +3074,7 @@ class SimplePie_Registry
                 case 'Cache':
                     // For backwards compatibility with old non-static
                     // Cache::create() methods
-                    if ('getHandler' === $method) {
+                    if ('get_handler' === $method) {
                         $result = @call_user_func_array([$class, 'create'], $parameters);
 
                         return $result;
@@ -3578,7 +3577,7 @@ class SimplePie_Cache_MySQL extends SimplePie_Cache_DB
         }
 
         $db = [];
-        while (false !== ($row = $query->fetchColumn())) {
+        while ($row = $query->fetchColumn()) {
             $db[] = $row;
         }
 
@@ -3656,7 +3655,7 @@ class SimplePie_Cache_MySQL extends SimplePie_Cache_DB
 
                     if ($query->execute()) {
                         $existing_ids = [];
-                        while (false !== ($row = $query->fetchColumn())) {
+                        while ($row = $query->fetchColumn()) {
                             $existing_ids[] = $row;
                         }
 
@@ -3754,7 +3753,7 @@ class SimplePie_Cache_MySQL extends SimplePie_Cache_DB
                     $query = $this->mysql->prepare($sql);
                     $query->bindValue(':feed', $this->id);
                     if ($query->execute()) {
-                        while (false !== ($row = $query->fetchColumn())) {
+                        while ($row = $query->fetchColumn()) {
                             $feed['child'][SIMPLEPIE_NAMESPACE_ATOM_10]['entry'][] = unserialize($row);
                         }
                     } else {
@@ -3849,7 +3848,7 @@ class SimplePie_Sanitize
 
     // Options
     public $remove_div = true;
-    public $imageHandler = '';
+    public $image_handler = '';
     public $strip_htmltags = ['base', 'blink', 'body', 'doctype', 'embed', 'font', 'form', 'frame', 'frameset', 'html', 'iframe', 'input', 'marquee', 'meta', 'noscript', 'object', 'param', 'script', 'style'];
     public $encode_instead_of_strip = false;
     public $strip_attributes = ['bgsound', 'class', 'expr', 'id', 'style', 'onclick', 'onerror', 'onfinish', 'onmouseover', 'onmouseout', 'onfocus', 'onblur', 'lowsrc', 'dynsrc'];
@@ -3874,12 +3873,12 @@ class SimplePie_Sanitize
         $this->remove_div = (bool) $enable;
     }
 
-    public function set_imageHandler($page = false)
+    public function set_image_handler($page = false)
     {
         if ($page) {
-            $this->imageHandler = (string) $page;
+            $this->image_handler = (string) $page;
         } else {
-            $this->imageHandler = false;
+            $this->image_handler = false;
         }
     }
 
@@ -4051,22 +4050,22 @@ class SimplePie_Sanitize
                 }
 
                 // If image handling (caching, etc.) is enabled, cache and rewrite all the image tags.
-                if (isset($this->imageHandler) && '' !== ((string) $this->imageHandler) && $this->enable_cache) {
+                if (isset($this->image_handler) && '' !== ((string) $this->image_handler) && $this->enable_cache) {
                     $images = $document->getElementsByTagName('img');
                     foreach ($images as $img) {
                         if ($img->hasAttribute('src')) {
                             $image_url = call_user_func($this->cache_name_function, $img->getAttribute('src'));
-                            $cache = $this->registry->call('Cache', 'getHandler', [$this->cache_location, $image_url, 'spi']);
+                            $cache = $this->registry->call('Cache', 'get_handler', [$this->cache_location, $image_url, 'spi']);
 
                             if ($cache->load()) {
-                                $img->setAttribute('src', $this->imageHandler . $image_url);
+                                $img->setAttribute('src', $this->image_handler . $image_url);
                             } else {
                                 $file = $this->registry->create('File', [$img['attribs']['src']['data'], $this->timeout, 5, ['X-FORWARDED-FOR' => $_SERVER['REMOTE_ADDR']], $this->useragent, $this->force_fsockopen]);
                                 $headers = $file->headers;
 
                                 if ($file->success && ($file->method & SIMPLEPIE_FILE_SOURCE_REMOTE === 0 || (200 === $file->status_code || $file->status_code > 206 && $file->status_code < 300))) {
                                     if ($cache->save(['headers' => $file->headers, 'body' => $file->body])) {
-                                        $img->setAttribute('src', $this->imageHandler . $image_url);
+                                        $img->setAttribute('src', $this->image_handler . $image_url);
                                     } else {
                                         trigger_error("$this->cache_location is not writeable. Make sure you've set the correct relative or absolute path, and that the location is server-writable.", E_USER_WARNING);
                                     }
@@ -4131,7 +4130,7 @@ class SimplePie_Sanitize
         }
 
         $ret .= '<html><head>';
-        $ret .= '<meta http-equiv="Content-Type" content="' . $content_type . '; charset=utf-8">';
+        $ret .= '<meta http-equiv="Content-Type" content="' . $content_type . '; charset=utf-8" />';
         $ret .= '</head><body>' . $html . '</body></html>';
 
         return $ret;
@@ -4330,7 +4329,7 @@ class SimplePie_Enclosure
 
     /**
      * @var string
-     * @see getHandler()
+     * @see get_handler()
      */
     public $handler;
 
@@ -4497,7 +4496,7 @@ class SimplePie_Enclosure
             $parsed = SimplePie_Misc::parse_url($link);
             $this->link = SimplePie_Misc::compress_parse_url($parsed['scheme'], $idn->encode($parsed['authority']), $parsed['path'], $parsed['query'], $parsed['fragment']);
         }
-        $this->handler = $this->getHandler(); // Needs to load last
+        $this->handler = $this->get_handler(); // Needs to load last
     }
 
     /**
@@ -4728,7 +4727,7 @@ class SimplePie_Enclosure
      *
      * @return string|null One of 'flash', 'fmedia', 'quicktime', 'wmedia', 'mp3'
      */
-    public function getHandler()
+    public function get_handler()
     {
         return $this->get_real_type(true);
     }
@@ -5114,7 +5113,7 @@ class SimplePie_Enclosure
         $bgcolor = '#ffffff';
         $mediaplayer = '';
         $widescreen = false;
-        $handler = $this->getHandler();
+        $handler = $this->get_handler();
         $type = $this->get_real_type();
 
         // Process options and reassign values as necessary
@@ -5273,10 +5272,10 @@ class SimplePie_Enclosure
      * extension
      *
      * @see get_type()
-     * @param bool $findHandler Internal use only, use {@see getHandler()} instead
+     * @param bool $find_handler Internal use only, use {@see get_handler()} instead
      * @return string MIME type
      */
-    public function get_real_type($findHandler = false)
+    public function get_real_type($find_handler = false)
     {
         // Mime-types by handler.
         $types_flash = ['application/x-shockwave-flash', 'application/futuresplash']; // Flash
@@ -5391,7 +5390,7 @@ class SimplePie_Enclosure
             }
         }
 
-        if ($findHandler) {
+        if ($find_handler) {
             if (in_array($type, $types_flash)) {
                 return 'flash';
             } elseif (in_array($type, $types_fmedia)) {
@@ -12130,7 +12129,7 @@ class SimplePie_Restriction
  *
  * @package SimplePie
  */
-class SimplePie_Exception extends \Exception
+class SimplePie_Exception extends Exception
 {
 }
 
@@ -12638,7 +12637,7 @@ class SimplePie_Misc
             $full .= " $key=\"" . htmlspecialchars($value['data']) . '"';
         }
         if ($element['self_closing']) {
-            $full .= '>';
+            $full .= ' />';
         } else {
             $full .= ">$element[content]</$element[tag]>";
         }
@@ -14311,7 +14310,7 @@ function embed_wmedia(width, height, link) {
      */
     public static function get_build()
     {
-        $root = dirname(__DIR__);
+        $root = dirname(dirname(__FILE__));
         if (file_exists($root . '/.git/index')) {
             return filemtime($root . '/.git/index');
         } elseif (file_exists($root . '/SimplePie')) {
@@ -14323,8 +14322,8 @@ function embed_wmedia(width, height, link) {
             }
 
             return $time;
-        } elseif (file_exists(__DIR__ . '/Core.php')) {
-            return filemtime(__DIR__ . '/Core.php');
+        } elseif (file_exists(dirname(__FILE__) . '/Core.php')) {
+            return filemtime(dirname(__FILE__) . '/Core.php');
         }
 
         return filemtime(__FILE__);
@@ -14472,8 +14471,8 @@ class SimplePie_Parser
             xml_parser_set_option($xml, XML_OPTION_SKIP_WHITE, 1);
             xml_parser_set_option($xml, XML_OPTION_CASE_FOLDING, 0);
             xml_set_object($xml, $this);
-            xml_set_character_dataHandler($xml, 'cdata');
-            xml_set_elementHandler($xml, 'tag_open', 'tag_close');
+            xml_set_character_data_handler($xml, 'cdata');
+            xml_set_element_handler($xml, 'tag_open', 'tag_close');
 
             // Parse!
             if (!xml_parse($xml, $data, true)) {
