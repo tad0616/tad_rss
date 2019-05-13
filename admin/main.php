@@ -1,9 +1,9 @@
 <?php
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = 'tad_rss_adm_main.tpl';
-include_once 'header.php';
-include_once '../function.php';
+$xoopsOption['template_main']  = 'tad_rss_adm_main.tpl';
+require_once __DIR__ . '/header.php';
+require_once dirname(__DIR__) . '/function.php';
 
 /*-----------function區--------------*/
 //tad_rss編輯表單
@@ -46,7 +46,7 @@ function insert_tad_rss()
 {
     global $xoopsDB, $xoopsUser;
 
-    require_once '../class/simplepie/SimplePie.php';
+    require_once dirname(__DIR__) . '/class/simplepie/SimplePie.php';
     $feed = new SimplePie();
     $feed->set_feed_url($_POST['url']);
     $feed->set_cache_location(XOOPS_ROOT_PATH . '/uploads/simplepie_cache');
@@ -82,7 +82,7 @@ function list_tad_rss($rss_sn = 1)
 
     $all_data = [];
     $i = 0;
-    while ($all = $xoopsDB->fetchArray($result)) {
+    while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： $rss_sn , $title , $url , $enable
         foreach ($all as $k => $v) {
             $$k = $v;
@@ -149,7 +149,7 @@ function delete_tad_rss($rss_sn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $rss_sn = system_CleanVars($_REQUEST, 'rss_sn', 0, 'int');
 $enable = system_CleanVars($_REQUEST, 'enable', 1, 'int');
@@ -185,4 +185,4 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-include_once 'footer.php';
+require_once __DIR__ . '/footer.php';
