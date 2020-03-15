@@ -174,7 +174,7 @@ echo "
   }*/
   h2.ui-li-heading {
     white-space: normal;
-    font-size: 15px;
+    font-size: 1em;
   }
   .ui-li .ui-btn-inner a.ui-link-inherit {
     padding: 0.4em 15px;

@@ -26,7 +26,7 @@
 
       <{foreach item=item from=$rss.content}>
         <h3><{$item.date}> <a href="<{$item.href}>" target="_blank"><{$item.title}></a></h3>
-        <div class="card card-body bg-light m-1" style="line-height: 1.8em; font-size:11pt;">
+        <div class="card card-body bg-light m-1" style="line-height: 1.8em;">
           <{$item.description}>
         </div>
       <{/foreach}>

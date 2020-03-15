@@ -1,4 +1,8 @@
-Tad RSS 2.3.4 (released from 2019-05-10)
+Tad RSS 2.3.5 (2020-03-15 released)
+================================================
+1. Correction for accessibility 2.0 AA standard
+
+Tad RSS 2.3.4 (2019-05-10 released)
 =========================================================
 1. Support XOOPS 2.5.10
 2. No longer supports PHP 5.3
