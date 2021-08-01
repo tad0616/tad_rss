@@ -11,13 +11,11 @@ if ('1' == $xoopsModuleConfig['use_pda'] and false === mb_strpos($_SESSION['them
 }
 
 //判斷是否對該模組有管理權限
-$isAdmin = false;
-if ($xoopsUser) {
-    $module_id = $xoopsModule->getVar('mid');
-    $isAdmin = $xoopsUser->isAdmin($module_id);
+if (!isset($_SESSION['tad_rss_adm'])) {
+    $_SESSION['tad_rss_adm'] = ($xoopsUser) ? $xoopsUser->isAdmin() : false;
 }
 
 $interface_menu[_TAD_TO_MOD] = 'index.php';
-if ($isAdmin) {
+if ($_SESSION['tad_rss_adm']) {
     $interface_menu[_TAD_TO_ADMIN] = 'admin/main.php';
 }

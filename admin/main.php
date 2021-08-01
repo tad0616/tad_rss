@@ -1,7 +1,8 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main']  = 'tad_rss_adm_main.tpl';
+$xoopsOption['template_main'] = 'tad_rss_adm_main.tpl';
 require_once __DIR__ . '/header.php';
 require_once dirname(__DIR__) . '/function.php';
 
@@ -149,10 +150,9 @@ function delete_tad_rss($rss_sn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$rss_sn = system_CleanVars($_REQUEST, 'rss_sn', 0, 'int');
-$enable = system_CleanVars($_REQUEST, 'enable', 1, 'int');
+$op = Request::getString('op');
+$rss_sn = Request::getInt('rss_sn');
+$enable = Request::getInt('enable', 1);
 
 switch ($op) {
     /*---判斷動作請貼在下方---*/
@@ -161,21 +161,25 @@ switch ($op) {
     case 'update_tad_rss':
         update_tad_rss($rss_sn);
         header("location: {$_SERVER['PHP_SELF']}");
-        break;
+        exit;
+
     //新增資料
     case 'insert_tad_rss':
         insert_tad_rss();
         header("location: {$_SERVER['PHP_SELF']}");
-        break;
+        exit;
+
     //刪除資料
     case 'delete_tad_rss':
         delete_tad_rss($rss_sn);
         header("location: {$_SERVER['PHP_SELF']}");
-        break;
+        exit;
+
     case 'change_enable':
         change_enable($rss_sn, $enable);
         header("location: {$_SERVER['PHP_SELF']}");
-        break;
+        exit;
+
     //預設動作
     default:
         tad_rss_form($rss_sn);

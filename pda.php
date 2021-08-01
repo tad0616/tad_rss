@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\Utility;
 
 if (file_exists(__DIR__ . '/mainfile.php')) {
@@ -141,9 +142,8 @@ function get_rss_data($rss_sn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$rss_sn = system_CleanVars($_REQUEST, 'rss_sn', 0, 'int');
+$op = Request::getString('op');
+$rss_sn = Request::getInt('rss_sn');
 
 switch ($op) {
     case 'view':
@@ -151,6 +151,7 @@ switch ($op) {
         $one = get_rss_data($rss_sn);
         $title = $one['title'];
         break;
+
     default:
         $main = list_tad_rss($xoopsModuleConfig['show_num']);
         $title = $xoopsModule->getVar('name');
