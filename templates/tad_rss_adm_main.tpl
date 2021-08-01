@@ -60,8 +60,8 @@ function delete_tad_rss_func(rss_sn){
                 <td><{$rss.url}></td>
                 <td><a href="main.php?op=change_enable&rss_sn=<{$rss.rss_sn}>&enable=<{$rss.new_enable}>"><img src="../images/<{$rss.enable}>.gif"></a></td>
                 <td>
-                <a href="main.php?rss_sn=<{$rss.rss_sn}>" class="btn btn-sm btn-warning"><{$smarty.const._TAD_EDIT}></a>
-                <a href="javascript:delete_tad_rss_func(<{$rss.rss_sn}>);" class="btn btn-sm btn-danger"><{$smarty.const._TAD_DEL}></a>
+                <a href="main.php?rss_sn=<{$rss.rss_sn}>" class="btn btn-sm btn-xs btn-warning"><{$smarty.const._TAD_EDIT}></a>
+                <a href="javascript:delete_tad_rss_func(<{$rss.rss_sn}>);" class="btn btn-sm btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
                 </td>
               </tr>
             <{/foreach}>
