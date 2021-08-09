@@ -7,6 +7,8 @@
   });
 </script>
 
+<h1 class="sr-only">All RSS</h1>
+
 <div id="rss-tabs">
   <ul>
     <{foreach item=web from=$data}>
