@@ -1,3 +1,7 @@
+Tad RSS 2.5 (2021-08-22 released)
+====================================
+1.Revised for the new version of AA Accessibility Standard 2021/07
+
 Tad RSS 2.4 (2021-08-01 released)
 ================================================
 1.Compliant with the new Accessibility AA Standard 2021/07
