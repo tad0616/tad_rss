@@ -7,7 +7,7 @@
   });
 </script>
 
-<h1 class="sr-only">All RSS</h1>
+<h1 class="sr-only visually-hidden">All RSS</h1>
 
 <div id="rss-tabs">
   <ul>

@@ -12,7 +12,7 @@ function delete_tad_rss_func(rss_sn){
     <div class="col-md-12">
       <form action="main.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
         <{if $rss_sn}>
-          <div class="form-group row">
+          <div class="form-group row mb-3">
             <div class="col-md-8">
               <input type="text" name="title" value="<{$title}>" class="form-control" placeholder="<{$smarty.const._MA_TADRSS_TITLE}>">
             </div>
@@ -34,7 +34,7 @@ function delete_tad_rss_func(rss_sn){
           <input type="hidden" name="rss_sn" value="<{$rss_sn}>">
         <{/if}>
 
-        <div class="form-group row">
+        <div class="form-group row mb-3">
           <div class="col-md-11">
             <input type="text" name="url" value="<{$rss_url}>" id="url" placeholder="<{$smarty.const._MA_TADRSS_URL}>" class="form-control">
           </div>
