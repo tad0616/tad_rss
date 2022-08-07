@@ -10,7 +10,7 @@ require_once XOOPS_ROOT_PATH . '/header.php';
 //列出所有tad_rss資料
 function list_tad_rss($maxitems = 5)
 {
-    global $xoopsDB, $xoopsModule, $xoopsModuleConfig, $xoopsTpl;
+    global $xoopsDB, $xoopsTpl;
 
     $sql = 'select * from ' . $xoopsDB->prefix('tad_rss') . " where enable='1'";
 
@@ -24,7 +24,7 @@ function list_tad_rss($maxitems = 5)
             $$k = $v;
         }
 
-        $rss = get_rss_by_simplepie($rss_sn, $url, $maxitems);
+        $rss = get_rss_by_simplepie($url, $maxitems);
 
         $data[$i]['title'] = $title;
         $data[$i]['rss_sn'] = $rss_sn;
@@ -39,15 +39,17 @@ function list_tad_rss($maxitems = 5)
 }
 
 //以 simplepie 來取得RSS
-function get_rss_by_simplepie($rss_sn = '', $url = '', $maxitems = 5)
+function get_rss_by_simplepie($url = '', $maxitems = 5)
 {
-    require_once XOOPS_ROOT_PATH . '/modules/tad_rss/class/simplepie/SimplePie.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tad_rss/class/simplepie/autoloader.php';
     $feed = new SimplePie();
-    $feed->set_output_encoding(_CHARSET);
     $feed->set_feed_url($url);
-    $feed->set_cache_location(XOOPS_ROOT_PATH . '/uploads/simplepie_cache');
+
     $feed->init();
     $feed->handle_content_type();
+
+    $feed->set_output_encoding(_CHARSET);
+    $feed->set_cache_location(XOOPS_ROOT_PATH . '/uploads/simplepie_cache');
 
     $arr['web']['title'] = $feed->get_title();
     $arr['web']['link'] = $feed->get_permalink();
@@ -76,7 +78,6 @@ function get_rss_by_simplepie($rss_sn = '', $url = '', $maxitems = 5)
 
 /*-----------執行動作判斷區----------*/
 $op = Request::getString('op');
-
 
 switch ($op) {
     default:

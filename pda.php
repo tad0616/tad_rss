@@ -27,7 +27,7 @@ function list_tad_rss($maxitems = 5)
             $$k = $v;
         }
 
-        $rss = get_rss_by_simplepie($rss_sn, $url, $maxitems);
+        $rss = get_rss_by_simplepie($url, $maxitems);
 
         $data .= "
         <ul data-role='listview' data-inset='false' data-header-theme='d' data-divider-theme='d'>
@@ -41,9 +41,9 @@ function list_tad_rss($maxitems = 5)
 }
 
 //以 simplepie 來取得RSS
-function get_rss_by_simplepie($rss_sn = '', $url = '', $maxitems = 5)
+function get_rss_by_simplepie($url = '', $maxitems = 5)
 {
-    require_once XOOPS_ROOT_PATH . '/modules/tad_rss/class/simplepie/SimplePie.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tad_rss/class/simplepie/autoloader.php';
     $feed = new SimplePie();
     $feed->set_output_encoding(_CHARSET);
     $feed->set_feed_url($url);
@@ -115,7 +115,7 @@ function get_one_rss($rss_sn)
     $url = $one['url'];
     $num = 2;
     $maxitems = $xoopsModuleConfig['show_num'] * $num;
-    $rss = get_rss_by_simplepie($rss_sn, $url, $maxitems);
+    $rss = get_rss_by_simplepie($url, $maxitems);
 
     $data = "
         <ul data-role='listview' data-inset='false' data-header-theme='c' data-divider-theme='c'>

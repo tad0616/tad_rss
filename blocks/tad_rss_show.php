@@ -10,11 +10,6 @@ function tad_rss_show($options = ['', 3, 170])
 
     $in = (empty($options[0])) ? '' : "and rss_sn in({$options[0]})";
 
-    $moduleHandler = xoops_getHandler('module');
-    $xoopsModule = $moduleHandler->getByDirname('tad_rss');
-    $configHandler = xoops_getHandler('config');
-    $xoopsModuleConfig = $configHandler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
-
     $sql = 'select * from ' . $xoopsDB->prefix('tad_rss') . " where enable='1' $in";
 
     $result = $xoopsDB->query($sql);
@@ -98,8 +93,8 @@ function tad_rss_show_edit($options)
 //以 simplepie 來取得RSS
 function get_rss_by_simplepie_block($url = '', $maxitems = 5)
 {
-    require_once XOOPS_ROOT_PATH . '/modules/tad_rss/class/simplepie/SimplePie.php';
-    $feed =new SimplePie();
+    require_once XOOPS_ROOT_PATH . '/modules/tad_rss/class/simplepie/autoloader.php';
+    $feed = new SimplePie();
     $feed->set_output_encoding(_CHARSET);
     $feed->set_feed_url($url);
     $feed->set_cache_location(XOOPS_ROOT_PATH . '/uploads/simplepie_cache');

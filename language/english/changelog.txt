@@ -1,6 +1,8 @@
 Tad RSS 2.6 (2022-01-28 released)
 ====================================
 1.Support BootStrap5
+2.SimplePie upgraded to 1.5.8
+3.Fix the problem that feed cannot be retrieved under localhost
 
 Tad RSS 2.5 (2021-08-22 released)
 ====================================
