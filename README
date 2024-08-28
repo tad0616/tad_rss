@@ -4,6 +4,7 @@ Tad RSS 3.0 (尚未釋出)
 2.支援PHP8.3
 3.移除pda.php之設定及相關界面
 4.用$xoopsDB->escape()取代$myts->addSlashes()
+5.移除pda.php
 
 
 Tad RSS 2.6 (2022-02-03 釋出)
