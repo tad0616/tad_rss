@@ -6,7 +6,8 @@ $modversion = [];
 
 //---模組基本資訊---//
 $modversion['name'] = _MI_TADRSS_NAME;
-$modversion['version'] = 2.6;
+// $modversion['version'] = 2.6;
+$modversion['version'] = $_SESSION['xoops_version'] >= 20511 ? '3.0.0-Stable' : '3.0';
 $modversion['description'] = _MI_TADRSS_DESC;
 $modversion['author'] = _MI_TADRSS_AUTHOR;
 $modversion['credits'] = _MI_TADRSS_CREDITS;
@@ -77,10 +78,3 @@ $modversion['config'][1]['description'] = '_MI_TADRSS_SHOW_NUM_DESC';
 $modversion['config'][1]['formtype'] = 'textbox';
 $modversion['config'][1]['valuetype'] = 'int';
 $modversion['config'][1]['default'] = '10';
-
-$modversion['config'][2]['name'] = 'use_pda';
-$modversion['config'][2]['title'] = '_MI_USE_PDA_TITLE';
-$modversion['config'][2]['description'] = '_MI_USE_PDA_TITLE_DESC';
-$modversion['config'][2]['formtype'] = 'yesno';
-$modversion['config'][2]['valuetype'] = 'int';
-$modversion['config'][2]['default'] = '1';

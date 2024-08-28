@@ -47,7 +47,7 @@ function insert_tad_rss()
 {
     global $xoopsDB, $xoopsUser;
 
-    require_once dirname(__DIR__) . '/class/simplepie/SimplePie.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tad_rss/class/simplepie/autoloader.php';
     $feed = new SimplePie();
     $feed->set_feed_url($_POST['url']);
     $feed->set_cache_location(XOOPS_ROOT_PATH . '/uploads/simplepie_cache');
@@ -70,7 +70,7 @@ function insert_tad_rss()
 //列出所有tad_rss資料
 function list_tad_rss($rss_sn = 1)
 {
-    global $xoopsDB, $xoopsModule, $xoopsTpl;
+    global $xoopsDB, $xoopsTpl;
 
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_rss') . '';
 

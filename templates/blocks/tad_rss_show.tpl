@@ -1,8 +1,8 @@
-<{foreach item=rss_data from=$block.rss_data}>
+<{foreach from=$block.rss_data item=rss_data}>
     <div>
         <a href="<{$rss_data.link}>" rel="external" style="font-weight:bold;"><{$rss_data.title}></a>
         <ul class="vertical_menu">
-            <{foreach item=rss from=$rss_data.content}>
+            <{foreach from=$rss_data.content item=rss}>
                 <li>
                 <a href="<{$rss.link}>" rel="external">
                 <{if $rss.date}>[<{$rss.date}>] <{/if}>
