@@ -5,7 +5,7 @@
             <{foreach from=$rss_data.content item=rss}>
                 <li>
                 <a href="<{$rss.link}>" rel="external">
-                <{if $rss.date}>[<{$rss.date}>] <{/if}>
+                <{if $rss.date|default:false}>[<{$rss.date}>] <{/if}>
                 <i class="fa fa-rss-square" aria-hidden="true"></i>
                 <{$rss.title}>
                 </a>
