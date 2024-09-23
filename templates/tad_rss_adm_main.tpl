@@ -14,7 +14,7 @@ function delete_tad_rss_func(rss_sn){
         <{if $rss_sn|default:false}>
           <div class="form-group row mb-3">
             <div class="col-md-8">
-              <input type="text" name="title" value="<{$title}>" class="form-control" placeholder="<{$smarty.const._MA_TADRSS_TITLE}>">
+              <input type="text" name="title" value="<{$title|default:''}>" class="form-control" placeholder="<{$smarty.const._MA_TADRSS_TITLE}>">
             </div>
             <div class="col-md-4">
               <div class="form-check-inline radio-inline">
@@ -31,15 +31,15 @@ function delete_tad_rss_func(rss_sn){
               </div>
             </div>
           </div>
-          <input type="hidden" name="rss_sn" value="<{$rss_sn}>">
+          <input type="hidden" name="rss_sn" value="<{$rss_sn|default:''}>">
         <{/if}>
 
         <div class="form-group row mb-3">
           <div class="col-md-11">
-            <input type="text" name="url" value="<{$rss_url}>" id="url" placeholder="<{$smarty.const._MA_TADRSS_URL}>" class="form-control">
+            <input type="text" name="url" value="<{$rss_url|default:''}>" id="url" placeholder="<{$smarty.const._MA_TADRSS_URL}>" class="form-control">
           </div>
           <div class="col-md-1">
-            <input type="hidden" name="op" value="<{$next_op}>">
+            <input type="hidden" name="op" value="<{$next_op|default:''}>">
             <button type="submit" class="btn btn-primary"><{$smarty.const._TAD_SAVE}></button>
           </div>
         </div>
@@ -66,7 +66,7 @@ function delete_tad_rss_func(rss_sn){
               </tr>
             <{/foreach}>
           <tr>
-          <td colspan=5 class="bar"><{$bar}></td></tr>
+          <td colspan=5 class="bar"><{$bar|default:''}></td></tr>
           </tbody>
         </table>
       <{/if}>

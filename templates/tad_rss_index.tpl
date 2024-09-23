@@ -1,4 +1,4 @@
-<{$toolbar}>
+<{$toolbar|default:''}>
 
 <script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/jqueryCookie/jquery.cookie.js"></script>
 <script type="text/javascript">
