@@ -1,12 +1,3 @@
-<link href="<{$xoops_url}>/modules/tadtools/css/font-awesome/css/font-awesome.css" rel="stylesheet">
-<script>
-function delete_tad_rss_func(rss_sn){
-  var sure = window.confirm("<{$smarty.const._TAD_DEL_CONFIRM}>");
-  if (!sure)  return;
-  location.href="main.php?op=delete_tad_rss&rss_sn=" + rss_sn;
-}
-</script>
-
 <div class="container">
   <div class="row">
     <div class="col-md-12">
@@ -35,12 +26,15 @@ function delete_tad_rss_func(rss_sn){
         <{/if}>
 
         <div class="form-group row mb-3">
-          <div class="col-md-11">
+          <div class="col-md-1">
+            <label for="url" class="col-form-label text-md-right text-md-end control-label"><{$smarty.const._MA_TADRSS_URL}></label>
+          </div>
+          <div class="col-md-10">
             <input type="text" name="url" value="<{$rss_url|default:''}>" id="url" placeholder="<{$smarty.const._MA_TADRSS_URL}>" class="form-control">
           </div>
           <div class="col-md-1">
             <input type="hidden" name="op" value="<{$next_op|default:''}>">
-            <button type="submit" class="btn btn-primary"><{$smarty.const._TAD_SAVE}></button>
+            <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i>  <{$smarty.const._TAD_SAVE}></button>
           </div>
         </div>
       </form>
@@ -60,15 +54,14 @@ function delete_tad_rss_func(rss_sn){
                 <td><{$rss.url}></td>
                 <td><a href="main.php?op=change_enable&rss_sn=<{$rss.rss_sn}>&enable=<{$rss.new_enable}>"><img src="../images/<{$rss.enable}>.gif"></a></td>
                 <td>
-                <a href="main.php?rss_sn=<{$rss.rss_sn}>" class="btn btn-sm btn-xs btn-warning"><{$smarty.const._TAD_EDIT}></a>
-                <a href="javascript:delete_tad_rss_func(<{$rss.rss_sn}>);" class="btn btn-sm btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
+                <a href="main.php?rss_sn=<{$rss.rss_sn}>" class="btn btn-sm btn-xs btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  <{$smarty.const._TAD_EDIT}></a>
+                <a href="javascript:delete_tad_rss_func(<{$rss.rss_sn}>);" class="btn btn-sm btn-xs btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> <{$smarty.const._TAD_DEL}></a>
                 </td>
               </tr>
             <{/foreach}>
-          <tr>
-          <td colspan=5 class="bar"><{$bar|default:''}></td></tr>
           </tbody>
         </table>
+        <div class="bar"><{$bar|default:''}></div>
       <{/if}>
     </div>
   </div>

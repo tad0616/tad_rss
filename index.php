@@ -5,16 +5,33 @@ use XoopsModules\Tadtools\Utility;
 require __DIR__ . '/header.php';
 $xoopsOption['template_main'] = 'tad_rss_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
+
+/*-----------執行動作判斷區----------*/
+$op = Request::getString('op');
+
+switch ($op) {
+    default:
+        list_tad_rss($xoopsModuleConfig['show_num']);
+        $op = 'list_tad_rss';
+        break;
+}
+
+/*-----------秀出結果區--------------*/
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
+$xoopsTpl->assign('jquery', Utility::get_jquery(true));
+$xoopsTpl->assign('now_op', $op);
+require_once XOOPS_ROOT_PATH . '/footer.php';
+
 /*-----------function區--------------*/
 
 //列出所有tad_rss資料
 function list_tad_rss($maxitems = 5)
 {
-    global $xoopsDB, $xoopsTpl;
+    global $xoopsDB, $xoopsTpl, $xoTheme;
+    $xoTheme->addScript('modules/tadtools/jqueryCookie/jquery.cookie.js');
 
-    $sql = 'select * from ' . $xoopsDB->prefix('tad_rss') . " where enable='1'";
-
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_rss') . '` WHERE `enable`=?';
+    $result = Utility::query($sql, 's', ['1']) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $data = [];
     $i = 0;
@@ -75,17 +92,3 @@ function get_rss_by_simplepie($url = '', $maxitems = 5)
 
     return $arr;
 }
-
-/*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
-
-switch ($op) {
-    default:
-        list_tad_rss($xoopsModuleConfig['show_num']);
-        break;
-}
-
-/*-----------秀出結果區--------------*/
-$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
-$xoopsTpl->assign('jquery', Utility::get_jquery(true));
-require_once XOOPS_ROOT_PATH . '/footer.php';

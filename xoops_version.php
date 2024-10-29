@@ -1,8 +1,6 @@
 <?php
-
-global $xoopsConfig;
-
 $modversion = [];
+global $xoopsConfig;
 
 //---模組基本資訊---//
 $modversion['name'] = _MI_TADRSS_NAME;
@@ -28,11 +26,12 @@ $modversion['min_php'] = 5.6;
 $modversion['min_xoops'] = '2.5';
 
 //---paypal資訊---//
-$modversion['paypal'] = [];
-$modversion['paypal']['business'] = 'tad0616@gmail.com';
-$modversion['paypal']['item_name'] = 'Donation : ' . _MI_TAD_WEB;
-$modversion['paypal']['amount'] = 0;
-$modversion['paypal']['currency_code'] = 'USD';
+$modversion['paypal'] = [
+    'business' => 'tad0616@gmail.com',
+    'item_name' => 'Donation : ' . _MI_TAD_WEB,
+    'amount' => 0,
+    'currency_code' => 'USD',
+];
 
 //---資料表架構---//
 $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
@@ -51,30 +50,33 @@ $modversion['hasMain'] = 1;
 
 $modversion['onInstall'] = 'include/onInstall.php';
 $modversion['onUpdate'] = 'include/onUpdate.php';
-
 //---樣板設定---//
-$modversion['templates'] = [];
-$i = 1;
-$modversion['templates'][$i]['file'] = 'tad_rss_index.tpl';
-$modversion['templates'][$i]['description'] = 'tad_rss_index.tpl';
-
-$i++;
-$modversion['templates'][$i]['file'] = 'tad_rss_adm_main.tpl';
-$modversion['templates'][$i]['description'] = 'tad_rss_adm_main.tpl';
+$modversion['templates'] = [
+    ['file' => 'tad_rss_index.tpl', 'description' => 'tad_rss_index.tpl'],
+    ['file' => 'tad_rss_admin.tpl', 'description' => 'tad_rss_admin.tpl'],
+];
 
 //---區塊設定---//
-$modversion['blocks'][1]['file'] = 'tad_rss_show.php';
-$modversion['blocks'][1]['name'] = _MI_TADRSS_BNAME1;
-$modversion['blocks'][1]['description'] = _MI_TADRSS_BDESC1;
-$modversion['blocks'][1]['show_func'] = 'tad_rss_show';
-$modversion['blocks'][1]['template'] = 'tad_rss_show.tpl';
-$modversion['blocks'][1]['edit_func'] = 'tad_rss_show_edit';
-$modversion['blocks'][1]['options'] = '|10';
+$modversion['blocks'] = [
+    [
+        'file' => 'tad_rss_show.php',
+        'name' => _MI_TADRSS_BNAME1,
+        'description' => _MI_TADRSS_BDESC1,
+        'show_func' => 'tad_rss_show',
+        'template' => 'tad_rss_show.tpl',
+        'edit_func' => 'tad_rss_show_edit',
+        'options' => '|10',
+    ],
+];
 
 //---偏好設定---//
-$modversion['config'][1]['name'] = 'show_num';
-$modversion['config'][1]['title'] = '_MI_TADRSS_SHOW_NUM';
-$modversion['config'][1]['description'] = '_MI_TADRSS_SHOW_NUM_DESC';
-$modversion['config'][1]['formtype'] = 'textbox';
-$modversion['config'][1]['valuetype'] = 'int';
-$modversion['config'][1]['default'] = '10';
+$modversion['config'] = [
+    [
+        'name' => 'show_num',
+        'title' => '_MI_TADRSS_SHOW_NUM',
+        'description' => '_MI_TADRSS_SHOW_NUM_DESC',
+        'formtype' => 'textbox',
+        'valuetype' => 'int',
+        'default' => '10',
+    ],
+];

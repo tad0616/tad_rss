@@ -1,18 +1,16 @@
 <?php
-
-require_once XOOPS_ROOT_PATH . '/modules/tad_rss/function_block.php';
-
+use XoopsModules\Tadtools\Utility;
 //區塊主函式 (友站消息(tad_rss_show))
 function tad_rss_show($options = ['', 3, 170])
 {
     global $xoopsDB, $xoTheme;
     $xoTheme->addStylesheet('modules/tadtools/css/vertical_menu.css');
 
-    $in = (empty($options[0])) ? '' : "and rss_sn in({$options[0]})";
+    $in = (empty($options[0])) ? '' : 'AND `rss_sn` IN(' . $options[0] . ')';
 
-    $sql = 'select * from ' . $xoopsDB->prefix('tad_rss') . " where enable='1' $in";
+    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_rss') . '` WHERE `enable`=? ' . $in;
 
-    $result = $xoopsDB->query($sql);
+    $result = Utility::query($sql, 's', ['1']) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $block = [];
 
@@ -49,9 +47,9 @@ function tad_rss_show_edit($options)
 
     $chkbox = '';
 
-    $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_rss') . " WHERE enable='1'";
+    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_rss') . '` WHERE `enable`=?';
+    $result = Utility::query($sql, 's', ['1']) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $result = $xoopsDB->query($sql);
     while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： $rss_sn , $title , $url , $enable
         foreach ($all as $k => $v) {

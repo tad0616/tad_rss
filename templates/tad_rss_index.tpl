@@ -1,6 +1,5 @@
 <{$toolbar|default:''}>
 
-<script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/jqueryCookie/jquery.cookie.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {
     var $tabs = $("#rss-tabs").tabs({ cookie: { expires: 30 } , collapsible: true});
@@ -21,7 +20,7 @@
         <h2>
           <a href="<{$rss.link}>"><{$rss.title}></a>
           <{if $smarty.session.tad_rss_adm|default:false}>
-            <a href="admin/main.php?op=tad_rss_form&rss_sn=<{$rss.rss_sn}>" class="btn btn-sm btn-xs btn-warning"><{$smarty.const._TAD_EDIT}></a>
+            <a href="admin/main.php?op=tad_rss_form&rss_sn=<{$rss.rss_sn}>" class="btn btn-sm btn-xs btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  <{$smarty.const._TAD_EDIT}></a>
           <{/if}>
         </h2>
       </div>

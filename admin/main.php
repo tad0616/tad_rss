@@ -1,16 +1,58 @@
 <?php
 use Xmf\Request;
+use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = 'tad_rss_adm_main.tpl';
+$xoopsOption['template_main'] = 'tad_rss_admin.tpl';
 require_once __DIR__ . '/header.php';
-require_once dirname(__DIR__) . '/function.php';
+
+/*-----------執行動作判斷區----------*/
+$op = Request::getString('op');
+$rss_sn = Request::getInt('rss_sn');
+$enable = Request::getInt('enable', 1);
+
+switch ($op) {
+
+    //更新資料
+    case 'update_tad_rss':
+        update_tad_rss($rss_sn);
+        header("location: {$_SERVER['PHP_SELF']}");
+        exit;
+
+    //新增資料
+    case 'insert_tad_rss':
+        insert_tad_rss();
+        header("location: {$_SERVER['PHP_SELF']}");
+        exit;
+
+    //刪除資料
+    case 'delete_tad_rss':
+        delete_tad_rss($rss_sn);
+        header("location: {$_SERVER['PHP_SELF']}");
+        exit;
+
+    case 'change_enable':
+        change_enable($rss_sn, $enable);
+        header("location: {$_SERVER['PHP_SELF']}");
+        exit;
+
+    //預設動作
+    default:
+        tad_rss_form($rss_sn);
+        list_tad_rss($rss_sn);
+        break;
+
+}
+
+/*-----------秀出結果區--------------*/
+$xoopsTpl->assign('now_op', $op);
+require_once __DIR__ . '/footer.php';
 
 /*-----------function區--------------*/
 //tad_rss編輯表單
 function tad_rss_form($rss_sn = '')
 {
-    global $xoopsDB, $xoopsUser, $xoopsTpl;
+    global $xoopsTpl;
 
     //抓取預設值
     if (!empty($rss_sn)) {
@@ -45,7 +87,7 @@ function tad_rss_form($rss_sn = '')
 //新增資料到tad_rss中
 function insert_tad_rss()
 {
-    global $xoopsDB, $xoopsUser;
+    global $xoopsDB;
 
     require_once XOOPS_ROOT_PATH . '/modules/tad_rss/class/simplepie/autoloader.php';
     $feed = new SimplePie();
@@ -56,10 +98,8 @@ function insert_tad_rss()
     $feed->set_output_encoding(_CHARSET);
     $title = $feed->get_title();
 
-    $sql = 'insert into ' . $xoopsDB->prefix('tad_rss') . "
-	(`title` , `url` , `enable`)
-	values('{$title}' , '{$_POST['url']}' , '1')";
-    $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_rss') . '` (`title`, `url`, `enable`) VALUES (?, ?, ?)';
+    Utility::query($sql, 'sss', [$title, $_POST['url'], '1']) or Utility::web_error($sql, __FILE__, __LINE__);
 
     //取得最後新增資料的流水編號
     $rss_sn = $xoopsDB->getInsertId();
@@ -71,6 +111,9 @@ function insert_tad_rss()
 function list_tad_rss($rss_sn = 1)
 {
     global $xoopsDB, $xoopsTpl;
+
+    $SweetAlert = new SweetAlert();
+    $SweetAlert->render("delete_tad_rss_func", "main.php?op=delete_tad_rss&rss_sn=", 'rss_sn');
 
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_rss') . '';
 
@@ -110,8 +153,9 @@ function get_tad_rss($rss_sn = '')
         return;
     }
 
-    $sql = 'select * from ' . $xoopsDB->prefix('tad_rss') . " where rss_sn='$rss_sn'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_rss') . '` WHERE `rss_sn`=?';
+    $result = Utility::query($sql, 'i', [$rss_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     $data = $xoopsDB->fetchArray($result);
 
     return $data;
@@ -120,14 +164,10 @@ function get_tad_rss($rss_sn = '')
 //更新tad_rss某一筆資料
 function update_tad_rss($rss_sn = '')
 {
-    global $xoopsDB, $xoopsUser;
+    global $xoopsDB;
 
-    $sql = 'update ' . $xoopsDB->prefix('tad_rss') . " set
-	 `title` = '{$_POST['title']}' ,
-	 `url` = '{$_POST['url']}' ,
-	 `enable` = '{$_POST['enable']}'
-	where rss_sn='$rss_sn'";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'UPDATE `' . $xoopsDB->prefix('tad_rss') . '` SET `title` = ?, `url` = ?, `enable` = ? WHERE `rss_sn` = ?';
+    Utility::query($sql, 'sssi', [$_POST['title'], $_POST['url'], $_POST['enable'], $rss_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     return $rss_sn;
 }
@@ -135,58 +175,18 @@ function update_tad_rss($rss_sn = '')
 //更新狀態
 function change_enable($rss_sn, $enable = '1')
 {
-    global $xoopsDB, $xoopsUser;
+    global $xoopsDB;
 
-    $sql = 'update ' . $xoopsDB->prefix('tad_rss') . " set `enable` = '{$enable}' where rss_sn='$rss_sn'";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'UPDATE `' . $xoopsDB->prefix('tad_rss') . '` SET `enable` = ? WHERE `rss_sn` = ?';
+    Utility::query($sql, 'si', [$enable, $rss_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
 }
 
 //刪除tad_rss某筆資料資料
 function delete_tad_rss($rss_sn = '')
 {
     global $xoopsDB;
-    $sql = 'delete from ' . $xoopsDB->prefix('tad_rss') . " where rss_sn='$rss_sn'";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_rss') . '` WHERE `rss_sn`=?';
+    Utility::query($sql, 'i', [$rss_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
 }
-
-/*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
-$rss_sn = Request::getInt('rss_sn');
-$enable = Request::getInt('enable', 1);
-
-switch ($op) {
-    /*---判斷動作請貼在下方---*/
-
-    //更新資料
-    case 'update_tad_rss':
-        update_tad_rss($rss_sn);
-        header("location: {$_SERVER['PHP_SELF']}");
-        exit;
-
-    //新增資料
-    case 'insert_tad_rss':
-        insert_tad_rss();
-        header("location: {$_SERVER['PHP_SELF']}");
-        exit;
-
-    //刪除資料
-    case 'delete_tad_rss':
-        delete_tad_rss($rss_sn);
-        header("location: {$_SERVER['PHP_SELF']}");
-        exit;
-
-    case 'change_enable':
-        change_enable($rss_sn, $enable);
-        header("location: {$_SERVER['PHP_SELF']}");
-        exit;
-
-    //預設動作
-    default:
-        tad_rss_form($rss_sn);
-        list_tad_rss($rss_sn);
-        break;
-        /*---判斷動作請貼在上方---*/
-}
-
-/*-----------秀出結果區--------------*/
-require_once __DIR__ . '/footer.php';
