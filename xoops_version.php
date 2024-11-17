@@ -58,7 +58,7 @@ $modversion['templates'] = [
 
 //---區塊設定---//
 $modversion['blocks'] = [
-    [
+    1 => [
         'file' => 'tad_rss_show.php',
         'name' => _MI_TADRSS_BNAME1,
         'description' => _MI_TADRSS_BDESC1,
