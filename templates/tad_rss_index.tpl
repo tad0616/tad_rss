@@ -20,7 +20,7 @@
         <h2>
           <a href="<{$rss.link}>"><{$rss.title}></a>
           <{if $smarty.session.tad_rss_adm|default:false}>
-            <a href="admin/main.php?op=tad_rss_form&rss_sn=<{$rss.rss_sn}>" class="btn btn-sm btn-xs btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  <{$smarty.const._TAD_EDIT}></a>
+            <a href="admin/main.php?op=tad_rss_form&rss_sn=<{$rss.rss_sn}>" class="btn btn-sm btn-xs btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i>  <{$smarty.const._TAD_EDIT}></a>
           <{/if}>
         </h2>
       </div>

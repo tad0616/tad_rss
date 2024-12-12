@@ -34,7 +34,7 @@
           </div>
           <div class="col-md-1">
             <input type="hidden" name="op" value="<{$next_op|default:''}>">
-            <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i>  <{$smarty.const._TAD_SAVE}></button>
+            <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-disk" aria-hidden="true"></i>  <{$smarty.const._TAD_SAVE}></button>
           </div>
         </div>
       </form>
@@ -54,7 +54,7 @@
                 <td><{$rss.url}></td>
                 <td><a href="main.php?op=change_enable&rss_sn=<{$rss.rss_sn}>&enable=<{$rss.new_enable}>"><img src="../images/<{$rss.enable}>.gif"></a></td>
                 <td>
-                <a href="main.php?rss_sn=<{$rss.rss_sn}>" class="btn btn-sm btn-xs btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  <{$smarty.const._TAD_EDIT}></a>
+                <a href="main.php?rss_sn=<{$rss.rss_sn}>" class="btn btn-sm btn-xs btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i>  <{$smarty.const._TAD_EDIT}></a>
                 <a href="javascript:delete_tad_rss_func(<{$rss.rss_sn}>);" class="btn btn-sm btn-xs btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> <{$smarty.const._TAD_DEL}></a>
                 </td>
               </tr>
