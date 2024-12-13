@@ -51,7 +51,7 @@
             <{foreach item=rss from=$all_data}>
               <tr>
                 <td><{$rss.title}></td>
-                <td><{$rss.url}></td>
+                <td><a href="<{$rss.url}>" target="_blank"><{$rss.url}></a></td>
                 <td><a href="main.php?op=change_enable&rss_sn=<{$rss.rss_sn}>&enable=<{$rss.new_enable}>"><img src="../images/<{$rss.enable}>.gif"></a></td>
                 <td>
                 <a href="main.php?rss_sn=<{$rss.rss_sn}>" class="btn btn-sm btn-xs btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i>  <{$smarty.const._TAD_EDIT}></a>
